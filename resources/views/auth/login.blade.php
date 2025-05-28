@@ -1,47 +1,62 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body style="background: linear-gradient(to right, #008CFF, #0073D1);" class="h-screen">
+  
+  <div class="flex h-screen w-screen">
+    
+    <div class="w-[420px] h-full bg-white rounded-r-[60px] shadow-xl px-10 py-10 flex flex-col ">
+      
+      <div>
+        <div class="text-center mb-10">
+          <h1 class="text-3xl text-dm font-bold text-gray-900 mb-1">Login</h1>
+          <p class="text-sm font-normal text-dm text-gray-500">Selamat datang di <span class="font-semibold text-indigo-600">SwiftLearning</span></p>
+        </div>
 
-    <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        @if(session('error'))
+          <p class="text-red-500 text-dm mb-4">{{ session('error') }}</p>
+        @endif
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <label for="email" class="block text-dm mb-1 text-gray-700">Email address</label>
+        <input type="email" name="email" id="email"placeholder="Email address"
+          class="w-full mb-5 p-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
+          required
+        >
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+        <label for="password" class="block text-dm mb-1 text-gray-700">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" class="w-full mb-8 p-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
+          required
+        >
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <button
+          type="submit"
+          class="w-full py-3 text-white font-medium rounded-full mb-4 bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 transition"
+        >
+          Masuk
+        </button>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        <a
+          href="{{ route('register') }}"
+          class="block text-center py-3 text-white font-medium rounded-full bg-gradient-to-r from-purple-500 to-indigo-400 hover:opacity-90 transition"
+        >
+          Daftar
+        </a>
+      </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+      <div class="text-center mt-10">
+        <a href="#" class="text-dm text-gray-500 hover:text-indigo-600">Login sebagai Mentor/Admin</a>
+      </div>
+    </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    <div class="flex-1"></div>
+  </div>
+
+</body>
+</html>

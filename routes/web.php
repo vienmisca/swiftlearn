@@ -19,6 +19,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');

@@ -1,52 +1,53 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="h-screen w-screen overflow-hidden flex">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+  <div class="w-[420px] h-full bg-white rounded-r-[60px] shadow-xl px-10 py-10 flex flex-col justify-center">
+    <div>
+      <div class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-gray-900">Daftar</h1>
+        <p class="text-sm text-gray-500">Selamat datang di <span class="font-semibold text-indigo-600">SwiftLearning</span></p>
+      </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+      <form method="POST" action="#">
+        <label for="name" class="block text-sm mb-1 text-gray-700">Name</label>
+        <input type="text" name="name" id="name" placeholder="Name"
+          class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-4 focus:outline-none" required>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <label for="email" class="block text-sm mb-1 text-gray-700">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email"
+          class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-4 focus:outline-none" required>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+        <label for="dob" class="block text-sm mb-1 text-gray-700">Date of birth</label>
+        <input type="date" name="dob" id="dob" placeholder="DD/MM/YY"
+          class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-4 focus:outline-none" required>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <label for="password" class="block text-sm mb-1 text-gray-700">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password"
+          class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-6 focus:outline-none" required>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+        <button type="submit"
+          class="w-full py-3 rounded-full font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 text-white mb-4">
+          Daftar
+        </button>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+        <a href="#"
+          class="w-full block text-center py-3 rounded-full font-semibold bg-gradient-to-r from-purple-400 to-indigo-600 text-white">
+          Login
+        </a>
+      </form>
+    </div>
+  </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+  
+  <div class="flex-1 h-full">
+    <img src="#nantibuatbackground" alt="swiftlearing" class="w-full h-full object-cover"/>
+  </div>
+</body>
+</html>

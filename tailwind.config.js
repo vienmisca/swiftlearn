@@ -13,9 +13,12 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                dm: ['"DM Sans"', 'sans-serif'],
             },
         },
     },
+
+
     
     plugins: [forms],
 };
