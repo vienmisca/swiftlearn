@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 <body style="background: linear-gradient(to right, #008CFF, #0073D1);" class="h-screen">
-  
+
   <div class="flex h-screen w-screen">
     
     <div class="w-[420px] h-full bg-white rounded-r-[60px] shadow-xl px-10 py-10 flex flex-col ">
