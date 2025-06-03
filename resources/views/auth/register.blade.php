@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Daftar</title>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="h-screen w-screen overflow-hidden flex">
 
-  <div class="w-[420px] h-full bg-white rounded-r-[60px] shadow-xl px-10 py-10 flex flex-col justify-center">
+  <div class="w-[420px] h-full bg-white rounded-r-[45px] shadow-xl px-10 py-10 flex flex-col justify-center">
     <div>
       <div class="text-center mb-10">
         <h1 class="text-3xl font-bold text-gray-900">Daftar</h1>
@@ -37,7 +38,7 @@
           Daftar
         </button>
 
-        <a href="#"
+        <a href="{{ route('login') }}"
           class="w-full block text-center py-3 rounded-full font-semibold bg-gradient-to-r from-purple-400 to-indigo-600 text-white">
           Login
         </a>

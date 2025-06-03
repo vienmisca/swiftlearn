@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +25,20 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::get('/home', function () {
+    return view('pages.home');
+});
+
+Route::get('/kursus', function () {
+    return view('pages.kursus');
+});
+
+Route::get('/admin-mentor/login', function () {
+    return view('auth.admin-mentor-login');
+})->name('adminmentor.login');
+
+Route::post('/admin-mentor/login', [AdminMentorLoginController::class, 'login'])->name('adminmentor.login.post');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
