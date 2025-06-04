@@ -36,11 +36,21 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
     ],
+
+    'siswa' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
+
+    'adminmentor' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
