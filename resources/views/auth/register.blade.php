@@ -15,8 +15,18 @@
         <h1 class="text-3xl font-bold text-gray-900">Daftar</h1>
         <p class="text-sm text-gray-500">Selamat datang di <span class="font-semibold text-indigo-600">SwiftLearning</span></p>
       </div>
+@if ($errors->any())
+    <div class="mb-4 text-red-600">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>• {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-      <form method="POST" action="#">
+      <form method="POST" action="/register">
+    @csrf
         <label for="name" class="block text-sm mb-1 text-gray-700">Name</label>
         <input type="text" name="name" id="name" placeholder="Name"
           class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-4 focus:outline-none" required>
@@ -32,6 +42,10 @@
         <label for="password" class="block text-sm mb-1 text-gray-700">Password</label>
         <input type="password" name="password" id="password" placeholder="Password"
           class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-6 focus:outline-none" required>
+
+        <label for="password_confirmation" class="block text-sm mb-1 text-gray-700">Confirm Password</label>
+        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password"
+        class="w-full px-4 py-3 rounded-full border border-gray-200 shadow mb-6 focus:outline-none" required>
 
         <button type="submit"
           class="w-full py-3 rounded-full font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 text-white mb-4">
