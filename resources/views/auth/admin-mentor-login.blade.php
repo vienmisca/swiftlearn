@@ -39,14 +39,7 @@
       <input id="password" type="password" name="password" required
         class="w-full mt-1 mb-4 px-4 py-3 rounded-full border border-gray-300 shadow-sm placeholder-gray-400 focus:outline-none" placeholder="Password" />
 
-      <!-- Role -->
-      <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-      <select id="role" name="role" required
-        class="w-full mt-1 mb-6 px-4 py-3 rounded-full border border-gray-300 shadow-sm text-gray-500">
-        <option value="" disabled selected>Role</option>
-        <option value="mentor">Mentor</option>
-        <option value="admin">Admin</option>
-      </select>
+
 
       <button type="submit"
   class="w-full py-3 rounded-full text-white font-semibold shadow-md hover:bg-[#4A4ADE] transition duration-200"
