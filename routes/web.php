@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\SiswaLoginController;
 use App\Http\Controllers\Auth\SiswaRegisterController;
 use App\Http\Controllers\Auth\AdminMentorLoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KursusController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -47,3 +48,39 @@ Route::get('/kursus', function () {
 
 // Include the default auth routes (if needed)
 require __DIR__.'/auth.php';
+
+Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
+
+// data di bawah adalah data dummy 
+Route::get('/kursus-saya', function () {
+    $historyCourses = [
+        (object)[
+            'title' => 'Kelas Gravitasi : belajar Tentang Gravitasi',
+            'thumbnail_url' => '/images/gravitasi.jpg',
+            'category_name' => 'Fisika',
+        ],
+        (object)[
+            'title' => 'Belajar Tentang CSS dan HTML',
+            'thumbnail_url' => '/images/css_html.jpg',
+            'category_name' => 'Informatika',
+        ],
+        (object)[
+            'title' => 'Belajar Dasar Python',
+            'thumbnail_url' => '/images/python.jpg',
+            'category_name' => 'Informatika',
+        ],
+        (object)[
+            'title' => 'Hukum Newton',
+            'thumbnail_url' => '/images/newton.jpg',
+            'category_name' => 'Fisika',
+        ],
+    ];
+
+    // View disesuaikan path: 'pages.kursus-saya'
+    return view('pages.kursus-saya', compact('historyCourses'));
+})->name('kursus-saya');
+
+
+Route::get('/profile', function () {
+    return view('profile.profile');
+})->name('profile');
