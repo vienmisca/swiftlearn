@@ -17,7 +17,9 @@
         <p class="text-sm text-gray-500">Selamat datang di <span class="font-semibold text-indigo-600">SwiftLearning</span></p>
       </div>
 
-      <form method="POST" action="{{ route('login') }}">
+      <form method="POST" action="{{ url('/login') }}">
+
+
         @csrf
 
         @if(session('error'))

@@ -19,7 +19,8 @@
             </div>
             <div class="flex items-center space-x-3">
                 <span class="text-white">
-                    {{ auth()->user()->name ?? 'Guest' }}
+                    {{ auth()->user()->name ?? 'Pelajar' }}
+
                 </span>
                 <img src="/images/avatar.png" alt="Avatar" class="h-10 w-10 rounded-full">
             </div>

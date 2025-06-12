@@ -10,7 +10,7 @@ class SiswaLoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login'); // siswa login view
+        return view('login');
     }
 
     public function login(Request $request)
@@ -20,26 +20,25 @@ class SiswaLoginController extends Controller
             'password' => ['required'],
         ]);
 
-        $credentials['role'] = 'siswa'; // enforce siswa role here
+        $credentials['role'] = 'siswa'; // optional if you have role column
 
-        if (Auth::guard('siswa')->attempt($credentials, $request->filled('remember'))) {
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/siswa/dashboard');
+
+            // REDIRECT TO HOME PAGE
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records for siswa.',
+            'email' => 'The provided credentials do not match our records.',
         ]);
     }
 
     public function logout(Request $request)
     {
-        Auth::guard('siswa')->logout();
-
+        Auth::logout();
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
 }
