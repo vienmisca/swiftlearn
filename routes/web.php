@@ -8,6 +8,7 @@ use App\Http\Controllers\KursusController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,8 +78,11 @@ Route::middleware(['auth', 'mentor'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard-admin', fn () => view('dashboard-admin'))->name('dashboard.admin');
+    Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('dashboard.admin');
+    Route::delete('/admin/siswa/{id}', [AdminController::class, 'deleteSiswa'])->name('siswa.delete');
 });
+
+
 
 /*
 |--------------------------------------------------------------------------
