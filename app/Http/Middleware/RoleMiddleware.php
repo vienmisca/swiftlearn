@@ -20,6 +20,7 @@ class RoleMiddleware
         if (Auth::user()->role !== $role) {
             abort(403, 'Unauthorized action.');
         }
+        
 
         return $next($request);
     }
