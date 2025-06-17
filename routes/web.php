@@ -82,8 +82,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/siswa/{id}', [AdminController::class, 'deleteSiswa'])->name('siswa.delete');
 });
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Shared Protected Routes
@@ -111,3 +109,12 @@ Route::post('/logout', function () {
 |--------------------------------------------------------------------------
 */
 require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| Materi Test Route (UI Saja)
+|--------------------------------------------------------------------------
+*/
+Route::get('/materi-test', function () {
+    return view('pages.materi.materi');
+})->name('materi.test');
