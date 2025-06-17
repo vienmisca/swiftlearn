@@ -36,6 +36,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+public function isSiswa(): bool
+{
+    return $this->role === 'siswa';
+}
 
     /**
      * Get the attributes that should be cast.
