@@ -14,10 +14,12 @@
   <h1 class="text-3xl font-bold text-blue-900">Dashboard</h1>
 
   <!-- Navbar -->
+
   <div class="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full flex items-center space-x-6 shadow-lg">
     <a href="#" class="text-white font-medium hover:underline">Dashboard</a>
     <a href="{{ route('mentor.kursus.history') }}" class="text-white font-medium hover:underline">Kursus</a>
     <img src="https://api.dicebear.com/7.x/bottts/svg?seed=vien" alt="Profile" class="w-12 h-12 rounded-full border-4 border-white">
+
   </div>
 </div>
 
@@ -29,7 +31,7 @@
     <aside class="lg:col-span-2 flex flex-col gap-6">
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
         <p class="text-lg font-bold text-blue-900">Jumlah Siswa</p>
-        <p class="text-5xl font-bold text-blue-900 mt-2">56</p>
+        <p class="text-4xl font-bold text-blue-900 mt-2">{{ $jumlahSiswa }}</p>
       </div>
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
         <p class="text-lg font-bold text-blue-900">Jumlah Kursus</p>
