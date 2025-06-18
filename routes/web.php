@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MentorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -69,10 +71,8 @@ Route::middleware(['auth', 'siswa'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'mentor'])->group(function () {
-    Route::get('/dashboard-mentor', fn () => view('dashboard-mentor'))->name('dashboard.mentor');
-});
+    Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('dashboard.mentor');
 
-Route::middleware(['auth', 'mentor'])->group(function () {
     Route::get('/kursus-history', function () {
         $historyCourses = [
             (object)[
@@ -86,9 +86,13 @@ Route::middleware(['auth', 'mentor'])->group(function () {
                 'category_name' => 'Informatika',
             ],
         ];
-       return view('kursus-history', compact('historyCourses'));
-    })->name('kursus.history');
+        return view('kursus-history', compact('historyCourses'));
+    })->name('mentor.kursus.history');
 });
+Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('mentor.dashboard');
+
+
+
 
 
 /*

@@ -11,7 +11,7 @@
     <!-- Header Menu -->
     <div class="flex justify-end mb-6">
         <div class="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full flex items-center space-x-6 shadow-lg">
-            <a href="#" class="text-white font-medium hover:underline">Dashboard</a>
+            <a href="{{ route('mentor.dashboard') }}" class="text-white font-medium hover:underline">Dashboard</a>
             <a href="#" class="text-white font-medium hover:underline">Kursus</a>
             <img src="https://api.dicebear.com/7.x/bottts/svg?seed=vien" alt="Profile" class="w-12 h-12 rounded-full border-4 border-white">
         </div>
