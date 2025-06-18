@@ -72,6 +72,25 @@ Route::middleware(['auth', 'mentor'])->group(function () {
     Route::get('/dashboard-mentor', fn () => view('dashboard-mentor'))->name('dashboard.mentor');
 });
 
+Route::middleware(['auth', 'mentor'])->group(function () {
+    Route::get('/kursus-history', function () {
+        $historyCourses = [
+            (object)[
+                'title' => 'Kelas Gravitasi : belajar Tentang Gravitasi',
+                'thumbnail_url' => '/images/gravitasi.jpg',
+                'category_name' => 'Fisika',
+            ],
+            (object)[
+                'title' => 'Belajar Tentang CSS dan HTML',
+                'thumbnail_url' => '/images/css_html.jpg',
+                'category_name' => 'Informatika',
+            ],
+        ];
+       return view('kursus-history', compact('historyCourses'));
+    })->name('kursus.history');
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes (Requires 'admin' role)
