@@ -15,7 +15,7 @@
   <div class="flex justify-end px-6 py-4">
     <div class="flex items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 rounded-full shadow-md space-x-8">
       <a href="#" class="text-white font-semibold hover:underline">Dashboard</a>
-      <a href="#" class="text-white font-semibold hover:underline">Kursus</a>
+      <a href="{{ route('mentor.kursus.history') }}" class="text-white font-semibold hover:underline">Kursus</a>
       <div class="w-10 h-10 rounded-full bg-white overflow-hidden">
         <img src="{{ asset('images/avatar.png') }}" alt="Avatar" class="w-full h-full object-cover">
       </div>
@@ -29,7 +29,7 @@
     <aside class="lg:col-span-2 flex flex-col gap-6">
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
         <p class="text-lg font-bold text-blue-900">Jumlah Siswa</p>
-        <p class="text-5xl font-bold text-blue-900 mt-2">56</p>
+        <p class="text-4xl font-bold text-blue-900 mt-2">{{ $jumlahSiswa }}</p>
       </div>
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
         <p class="text-lg font-bold text-blue-900">Jumlah Kursus</p>

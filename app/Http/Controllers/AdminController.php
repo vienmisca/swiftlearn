@@ -20,7 +20,7 @@ class AdminController extends Controller
             });
         }
 
-        $siswaList = $query->latest()->paginate(10);
+        $siswaList = $query->latest()->paginate(5);
         $jumlahSiswa = User::where('role', 'siswa')->count();
         $jumlahMentor = User::where('role', 'mentor')->count();
 
