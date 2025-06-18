@@ -36,6 +36,13 @@ Route::post('/admin-mentor/login', [AdminMentorLoginController::class, 'login'])
 Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/home', fn () => view('pages.home'))->name('home');
 
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/edit-profile', function () {
+        return view('profile.profile-edit');
+    })->name('profile.edit');
+});
+
+
     Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
 
     Route::get('/kursus-saya', function () {
@@ -65,6 +72,7 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     })->name('kursus-saya');
 });
 
+    
 /*
 |--------------------------------------------------------------------------
 | Mentor Routes (Requires 'mentor' role)
@@ -111,9 +119,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', function () {
+        return view('profile.profile');
+    })->name('profile');
+
 
     // Logout for Admin/Mentor
     Route::post('/admin-mentor/logout', [AdminMentorLoginController::class, 'logout'])->name('adminmentor.logout');

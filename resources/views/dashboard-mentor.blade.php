@@ -8,19 +8,21 @@
 </head>
 <body class="bg-blue-100 font-sans p-6">
 
+<!-- Judul dan Navbar -->
+<div class="flex justify-between items-center mb-6">
   <!-- Judul -->
-  <h1 class="text-3xl font-bold text-blue-900 mb-6">Dashboard</h1>
+  <h1 class="text-3xl font-bold text-blue-900">Dashboard</h1>
 
   <!-- Navbar -->
-  <div class="flex justify-end px-6 py-4">
-    <div class="flex items-center bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 rounded-full shadow-md space-x-8">
-      <a href="#" class="text-white font-semibold hover:underline">Dashboard</a>
-      <a href="{{ route('mentor.kursus.history') }}" class="text-white font-semibold hover:underline">Kursus</a>
-      <div class="w-10 h-10 rounded-full bg-white overflow-hidden">
-        <img src="{{ asset('images/avatar.png') }}" alt="Avatar" class="w-full h-full object-cover">
-      </div>
-    </div>
+
+  <div class="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full flex items-center space-x-6 shadow-lg">
+    <a href="#" class="text-white font-medium hover:underline">Dashboard</a>
+    <a href="{{ route('mentor.kursus.history') }}" class="text-white font-medium hover:underline">Kursus</a>
+    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=vien" alt="Profile" class="w-12 h-12 rounded-full border-4 border-white">
+
   </div>
+</div>
+
 
   <!-- Grid Layout -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
