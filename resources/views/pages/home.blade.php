@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-10">
             <!-- Left Column -->
             <div class="lg:col-span-3 space-y-6">
-                <!-- Greeting Card -->
+                <!-- Greeting Card -->  
                 <div class="bg-white rounded-2xl shadow p-6">
                     <h2 class="text-3xl font-bold text-gray-800">
                         Halo {{ auth()->user()->name ?? 'Pelajar' }}!<br>

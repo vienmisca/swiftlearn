@@ -10,12 +10,13 @@
     <div class="bg-blue-100 min-h-screen py-10 px-8">
         <!-- Navbar -->
         <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
-            <div class="flex items-center space-x-8 text-white">
-                <img src="/images/logo.png" alt="Logo" class="h-8">
-                <a href="#" class="hover:underline">Home</a>
-                <a href="#" class="hover:underline">Kursus</a>
-                <a href="#" class="hover:underline font-semibold underline">Kursus Saya</a>
-            </div>
+<div class="flex items-center space-x-8 text-white text-base"> <!-- tambah ukuran font -->
+    <img src="/images/logo.png" alt="Logo" class="h-8">
+    <a href="#" class="hover:underline font-semibold">Home</a>
+    <a href="#" class="hover:underline font-semibold">Kursus</a>
+    <a href="#" class="hover:underline font-semibold underline">Kursus Saya</a>
+</div>
+
             <div class="flex items-center space-x-3">
                 <span class="text-white">
                     {{ auth()->user()->name ?? 'Guest' }}
