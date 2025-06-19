@@ -6,14 +6,36 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Dashboard Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  @viteReactRefresh
-  @vite(['resources/css/app.css', 'resources/js/app.jsx']) <!-- ✅ Vite includes React -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="bg-blue-100 font-sans p-6">
 
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-blue-900">Dashboard</h1>
-    <div id="admin-dropdown"></div> <!-- ✅ React mounts here -->
+    <h1 class="text-3xl font-bold text-blue-900">Admin Dashboard</h1>
+    <div x-data="{ open: false }" class="relative">
+  <button @click="open = !open">
+    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=admin" alt="Admin"
+         class="w-12 h-12 rounded-full border-4 border-white cursor-pointer">
+  </button>
+
+  <!-- Dropdown -->
+  <div x-show="open" @click.outside="open = false"
+       class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg p-4 z-50">
+    <form method="POST" action="{{ route('adminmentor.logout') }}">
+      @csrf
+      <button type="submit"
+              class="w-full text-red-600 flex items-center space-x-2 hover:underline">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7" />
+        </svg>
+        <span>Keluar</span>
+      </button>
+    </form>
+  </div>
+</div>
+
   </div>
 
   <!-- Grid Layout -->

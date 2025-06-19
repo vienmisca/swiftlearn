@@ -16,41 +16,63 @@
 <body class="bg-blue-100">
 
     <!-- Profil Header -->
-    <div class="bg-gradient-to-r from-blue-700 to-blue-500 p-8 relative text-white rounded-b-3xl shadow-lg overflow-hidden">
-        <!-- Background dekorasi bisa pakai pseudo element / gambar di CSS -->
-        <div class="flex items-center space-x-6 relative z-10">
-            <img src="/images/avatar.png" alt="Avatar" class="h-24 w-24 rounded-full border-4 border-white shadow-md" />
-            <div>
-                <h2 class="text-2xl font-bold">{{ auth()->user()->name ?? 'Guest' }}</h2>
-                <p class="text-white/80">Joeskoeofc@gmail.com</p>
-                <div class="flex items-center space-x-2 mt-1">
-                    <span class="text-yellow-400 font-bold">Lvl 3</span>
-                    <span>🌼 🌼</span>
-                </div>
-                <p class="mt-3 text-sm leading-relaxed max-w-xl">
-                    Lorem ipsum dolor bla bla bla bla bla bla <br>
-                    blablablablablablablablablablablablablablablabl blablabl blablablablablabl <br>
-                    ablabalbalb ablab lab lb ablab lablb albl al (biodata)
-                </p>
-            </div>
-            <button class="absolute top-8 right-8 bg-white text-blue-700 font-semibold px-5 py-2 rounded-full shadow hover:bg-blue-100 transition">
-                Edit Profile
-            </button>
-        </div>
+<div class="relative bg-gradient-to-r from-blue-700 to-blue-500 text-white p-10 rounded-b-3xl overflow-hidden">
+
+    <!-- Decorative SVG (optional) -->
+    <div class="absolute right-0 top-0 opacity-40 z-0">
+        <!-- Add decorative SVG shapes if needed -->
     </div>
+
+    <!-- Back Button -->
+    <a href="{{ route('home') }}" class="absolute top-6 left-6 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white hover:text-yellow-300 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </a>
+
+    <!-- Profile Content -->
+    <div class="flex items-start gap-6 relative z-10">
+        <!-- Avatar -->
+        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : '/images/avatar.png' }}" class="h-24 w-24 rounded-full border-4 border-white shadow-lg" />
+
+
+        <!-- Info -->
+        <div>
+            <h2 class="text-3xl font-bold">{{ auth()->user()->name ?? 'Guest' }}</h2>
+            <p class="text-white/80 text-sm">{{ auth()->user()->email ?? 'email@example.com' }}</p>
+            <div class="flex items-center space-x-2 mt-1">
+                <span class="text-yellow-400 font-bold text-lg">Lvl 3</span>
+                <span class="text-xl">🌼 🌼</span>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed max-w-xl">{{ auth()->user()->about ?? 'Belum ada deskripsi' }}</p>
+        </div>
+
+        <!-- Edit Profile Button -->
+<div class="ml-auto">
+    <a href="{{ route('profile.edit') }}" class="bg-white text-blue-700 font-semibold px-6 py-2 rounded-full shadow hover:bg-blue-100 transition">
+        Edit Profile
+    </a>
+</div>
+
+    </div>
+</div>
+
 
     <!-- Konten Profil -->
     <div class="max-w-5xl mx-auto py-12 px-6">
 
         <!-- Materi yang diminati -->
-        <div class="mb-10 text-center">
-            <h3 class="text-lg font-semibold mb-4 text-gray-800">Materi Yang di minati :</h3>
-            <div class="flex justify-center gap-4 flex-wrap">
-                <div class="bg-white px-6 py-2 rounded-xl shadow font-semibold text-blue-700">Fisika</div>
-                <div class="bg-white px-6 py-2 rounded-xl shadow font-semibold text-blue-700">IPA</div>
-                <div class="bg-white px-6 py-2 rounded-xl shadow font-semibold text-blue-700">Informatika</div>
-            </div>
-        </div>
+        <div class="mb-10 text-center"">
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">Materi yang diminati:</h3>
+    <div class="flex justify-center gap-4 flex-wrap">
+        @forelse ($user->interests as $materi)
+            <span class="bg-white px-6 py-2 rounded-xl shadow font-semibold text-blue-700">{{ $materi }}</span>
+        @empty
+            <span class="text-gray-500 italic">Tidak ada materi yang dipilih</span>
+        @endforelse
+    </div>
+</div>
+
 
         <!-- Statistik -->
         <div class="text-center mb-6">
