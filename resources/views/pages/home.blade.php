@@ -12,7 +12,7 @@
         <!-- Navbar -->
         <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
             <div class="flex items-center space-x-8 text-white">
-                <img src="/images/logo.png" alt="Logo" class="h-8">
+                <img src="https://media.discordapp.net/attachments/755299102148919317/1384821190991806534/Logo_SL.png?ex=6853d2bc&is=6852813c&hm=af2cb050048dd07b8cd18a50ce813fff121ea9163d8ce607270588a5f7f0f5ad&=&format=webp&quality=lossless&width=930&height=930" alt="Logo" class="h-8">
                 <a href="#" class="font-semibold hover:underline">Home</a>
                 <a href="#" class="hover:underline">Kursus</a>
                 <a href="#" class="hover:underline">Kursus Saya</a>
@@ -22,7 +22,10 @@
                     {{ auth()->user()->name ?? 'Pelajar' }}
 
                 </span>
-                <img src="/images/avatar.png" alt="Avatar" class="h-10 w-10 rounded-full">
+                <a href="{{ route('profile') }}">
+  <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : '/images/avatar.png' }}" class="h-10 w-10 rounded-full hover:scale-105 transition-transform">
+</a>
+
             </div>
         </div>
 

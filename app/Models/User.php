@@ -26,6 +26,10 @@ class User extends Authenticatable
     'password',
     'role', // Add this
     ];
+// In your User.php (or Siswa.php) model
+protected $casts = [
+    'interests' => 'array',
+];
 
     /**
      * The attributes that should be hidden for serialization.

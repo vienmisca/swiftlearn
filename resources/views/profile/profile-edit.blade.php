@@ -10,22 +10,28 @@
   <!-- Sidebar -->
   <div class="w-1/4 bg-gradient-to-b from-blue-800 to-blue-500 text-white flex flex-col items-center py-10 relative">
     <!-- Back Icon -->
-    <div class="absolute top-4 left-4">
-      <a href="#" class="text-3xl text-white">&larr;</a>
-    </div>
+    <a href="{{ route('profile') }}" class="absolute top-6 left-6 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white hover:text-yellow-300 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </a>
 
     <!-- Avatar -->
-    <img src="/images/avatar.png" alt="Avatar" class="w-24 h-24 rounded-full border-4 border-green-400 mb-4">
+    <img src="{{ $user->photo ? asset('storage/' . $user->photo) : '/images/avatar.png' }}" class="h-24 w-24 rounded-full border-4 border-white shadow-lg"/>
     
     <div class="text-center">
-      <h2 class="text-xl font-semibold">Joe Skoe</h2>
-      <p class="text-sm opacity-80">Joeskoeofc@gmail.com</p>
+      <h2 class="text-xl font-semibold">{{ auth()->user()->name ?? 'Guest' }}</h2>
+      <p class="text-white/80 text-sm">{{ auth()->user()->email ?? 'email@example.com' }}</p>
     </div>
 
     <!-- Logout -->
-    <a href="#" class="absolute bottom-10 left-10 px-4 py-2 text-red-600 border-2 border-red-600 rounded-md hover:bg-red-600 hover:text-white transition bg-white">
-      Keluar
-    </a>
+    <form method="POST" action="{{ route('logout') }}" class="absolute bottom-10 left-10">
+    @csrf
+    <button type="submit" class="px-4 py-2 text-red-600 border-2 border-red-600 rounded-md hover:bg-red-600 hover:text-white transition bg-white">
+        Keluar
+    </button>
+</form>
+
   </div>
 
   <!-- Form Content -->
@@ -36,8 +42,22 @@
     </div>
 
     <h1 class="text-3xl font-bold text-blue-900 mb-6">Ubah Profile</h1>
+@if (session('success'))
+  <div class="bg-green-100 text-green-700 p-4 rounded mb-4">{{ session('success') }}</div>
+@endif
 
-    <form action="#" method="POST" enctype="multipart/form-data">
+@if ($errors->any())
+  <div class="bg-red-100 text-red-700 p-4 rounded mb-4">
+    <ul class="list-disc pl-5">
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
+
+    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+
       @csrf
 
       <!-- Upload Photo -->
@@ -52,7 +72,7 @@
           <!-- Nama -->
           <div>
             <label class="block text-blue-900 font-semibold mb-1">Nama</label>
-            <input type="text" name="name" class="w-full p-3 rounded-md border" placeholder="Nama">
+            <input type="text" name="name" value="{{ old('name', $user->name) }}" class="w-full p-3 rounded-md border" placeholder="Nama">
           </div>
 
           <!-- About -->
@@ -65,32 +85,36 @@
           <div>
             <label class="block text-blue-900 font-semibold mb-1">Materi Yang di Minati</label>
             <div class="flex flex-wrap gap-4">
-              <select name="interests[]" class="px-4 py-2 bg-white rounded-md shadow border">
-                <option>Fisika</option>
-              </select>
-              <select name="interests[]" class="px-4 py-2 bg-white rounded-md shadow border">
-                <option>IPA</option>
-              </select>
-              <select name="interests[]" class="px-4 py-2 bg-white rounded-md shadow border">
-                <option>Informatika</option>
-              </select>
-            </div>
-          </div>
+              @php
+        $options = ['IPA', 'Matematika', 'Bahasa', 'Kimia', 'Fisika', 'Informatika'];
+        $selected = old('interests', $user->interests ?? []);
+    @endphp
+
+    @for ($i = 0; $i < 3; $i++)
+      <select name="interests[]" class="px-4 py-2 bg-white rounded-md shadow border w-full">
+        <option value="" disabled {{ !isset($selected[$i]) ? 'selected' : '' }}>Pilih Materi</option>
+        @foreach ($options as $option)
+          <option value="{{ $option }}" {{ ($selected[$i] ?? '') === $option ? 'selected' : '' }}>{{ $option }}</option>
+        @endforeach
+      </select>
+    @endfor
+  </div>
+</div>
         </div>
 
         <!-- Kanan -->
         <div class="w-1/2 space-y-4">
           <div>
             <label class="block text-blue-900 font-semibold mb-1">Password</label>
-            <input type="password" name="old_password" class="w-full p-3 rounded-md border" placeholder="Password Lama">
+            <input type="password" name="old_password" class="w-full p-3 rounded-md border" placeholder="Current password">
           </div>
           <div>
             <label class="block text-blue-900 font-semibold mb-1">New Password</label>
-            <input type="password" name="new_password" class="w-full p-3 rounded-md border" placeholder="Password Baru">
+            <input type="password" name="new_password" class="w-full p-3 rounded-md border" placeholder="New password">
           </div>
           <div>
             <label class="block text-blue-900 font-semibold mb-1">Confirm Password</label>
-            <input type="password" name="confirm_password" class="w-full p-3 rounded-md border" placeholder="Konfirmasi Password">
+            <input type="password" name="new_password_confirmation" class="w-full p-3 rounded-md border" placeholder="Confirm password">
           </div>
         </div>
       </div>

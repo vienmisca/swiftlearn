@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MentorController;
+use App\Http\Controllers\HomeController;
+
 
 
 /*
@@ -33,16 +35,26 @@ Route::post('/admin-mentor/login', [AdminMentorLoginController::class, 'login'])
 | Siswa Routes (Requires 'siswa' role)
 |--------------------------------------------------------------------------
 */
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/home', fn () => view('pages.home'))->name('home');
 
-    Route::middleware(['auth'])->group(function () {
-    Route::get('/edit-profile', function () {
-        return view('profile.profile-edit');
+    // ✅ Profile - Display
+    Route::get('/profile', function () {
+        $user = auth()->user();
+        return view('profile.profile', compact('user'));
+    })->name('profile');
+
+    // ✅ Profile - Edit Form
+    Route::get('/profile/edit', function () {
+        $user = auth()->user();
+        return view('profile.profile-edit', compact('user'));
     })->name('profile.edit');
-});
 
+    // ✅ Profile - Update Handler
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
+    // ✅ Kursus
     Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
 
     Route::get('/kursus-saya', function () {
@@ -72,6 +84,7 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     })->name('kursus-saya');
 });
 
+
     
 /*
 |--------------------------------------------------------------------------
@@ -97,7 +110,8 @@ Route::middleware(['auth', 'mentor'])->group(function () {
         return view('kursus-history', compact('historyCourses'));
     })->name('mentor.kursus.history');
 });
-Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('mentor.dashboard');
+Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('dashboard.mentor');
+
 
 
 
@@ -122,9 +136,9 @@ Route::middleware(['auth'])->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', function () {
-        return view('profile.profile');
-    })->name('profile');
+    // Route::get('/profile', function () {
+    //     return view('profile.profile');
+    // })->name('profile');
 
 
     // Logout for Admin/Mentor
