@@ -21,8 +21,8 @@
     <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
         <div class="flex items-center space-x-8 text-white">
             <img src="/images/logo.png" alt="Logo" class="h-8">
-            <a href="#" class="font-semibold hover:underline">Home</a>
-            <a href="#" class="hover:underline font-semibold underline">Kursus</a>
+            <a href="#" class="hover:underline">Home</a>
+            <a href="#" class="hover:underline underline">Kursus</a>
             <a href="#" class="hover:underline">Kursus Saya</a>
         </div>
         <div class="flex items-center space-x-3">
