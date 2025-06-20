@@ -16,11 +16,13 @@ export default {
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
         dm: ['"DM Sans"', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         // contoh warna custom jika perlu
         primary: '#5C5CFF',
         secondary: '#4A4ADE',
+        navy: '#00095B',
       },
     },
   },

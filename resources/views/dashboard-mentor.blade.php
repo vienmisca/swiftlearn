@@ -4,15 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard Mentor</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
 </head>
 <body class="bg-blue-100 font-sans p-6">
 
 <!-- Judul dan Navbar -->
 <div class="flex justify-between items-center mb-6">
   <!-- Judul -->
-  <h1 class="text-3xl font-bold text-blue-900">Dashboard</h1>
+  <h1 class="text-3xl font-poppins font-bold tracking-tighter text-navy">Dashboard</h1>
 
   <!-- Navbar -->
 
@@ -59,22 +61,22 @@
     <!-- Sidebar -->
     <aside class="lg:col-span-2 flex flex-col gap-6">
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
-        <p class="text-lg font-bold text-blue-900">Jumlah Siswa</p>
+        <p class="text-lg font-bold font-dm text-blue-900">Jumlah Siswa</p>
         <p class="text-4xl font-bold text-blue-900 mt-2">{{ $jumlahSiswa }}</p>
       </div>
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
-        <p class="text-lg font-bold text-blue-900">Jumlah Kursus</p>
+        <p class="text-lg font-bold font-dm text-blue-900">Jumlah Kursus</p>
         <p class="text-5xl font-bold text-blue-900 mt-2">5</p>
       </div>
       <div class="bg-white text-center rounded-2xl shadow-md py-6">
-        <p class="text-lg font-bold text-blue-900">Jumlah Materi</p>
+        <p class="text-lg font-bold font-dm text-blue-900">Jumlah Materi</p>
         <p class="text-5xl font-bold text-blue-900 mt-2">55</p>
       </div>
     </aside>
 
     <!-- Main Content -->
     <main class="lg:col-span-6 bg-white rounded-2xl shadow-md p-6">
-      <h2 class="text-2xl font-bold text-blue-900 mb-4">Kursus Anda</h2>
+      <h2 class="text-2xl font-mb font-bold text-blue-900 mb-4">Kursus Anda</h2>
       <div class="space-y-4">
         <div class="bg-gray-100 p-4 rounded-xl shadow-sm">
           <p class="font-bold text-blue-900">Kelas Gravitasi : belajar Tentang Gravitasi</p>
