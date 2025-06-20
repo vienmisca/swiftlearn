@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Kursus Saya</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body class="bg-blue-100 min-h-screen p-6">
 
@@ -49,7 +51,7 @@
 
     <!-- Main Content -->
     <div class="bg-white rounded-3xl shadow-md p-8 max-w-6xl mx-auto">
-        <h1 class="text-3xl font-extrabold text-blue-900 mb-8">Kursus Saya</h1>
+        <h1 class="text-3xl font-dm font-extrabold text-navy mb-8">Kursus Saya</h1>
 
         @php
         $courses = [

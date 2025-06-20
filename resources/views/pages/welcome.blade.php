@@ -6,6 +6,8 @@
     <title>SwiftLearning - Welcome</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
 </head>
 <body class="bg-gradient-to-r from-indigo-500 to-blue-500 min-h-screen flex items-center justify-center">
 

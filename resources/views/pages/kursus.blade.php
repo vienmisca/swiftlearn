@@ -18,32 +18,41 @@
 <div class="bg-blue-100 min-h-screen py-10 px-8">
 
     {{-- Navbar --}}
-    <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
-        <div class="flex items-center space-x-8 text-white">
-            <img src="/images/logo.png" alt="Logo" class="h-8">
-            <a href="#" class="hover:underline">Home</a>
-            <a href="#" class="hover:underline underline">Kursus</a>
-            <a href="#" class="hover:underline">Kursus Saya</a>
+     <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
+            <div class="flex items-center space-x-8 text-white">
+                <img src="https://media.discordapp.net/attachments/755299102148919317/1384821190991806534/Logo_SL.png?ex=6853d2bc&is=6852813c&hm=af2cb050048dd07b8cd18a50ce813fff121ea9163d8ce607270588a5f7f0f5ad&=&format=webp&quality=lossless&width=930&height=930" alt="Logo" class="h-8">
+                <a href="#" class=" hover:underline">Home</a>
+                <a href="#" class=" font-semibold hover:underline">Kursus</a>
+                <a href="#" class=" hover:underline">Kursus Saya</a>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-white">
+                    {{ auth()->user()->name ?? 'Pelajar' }}
+                </span>
+                <a href="{{ route('profile') }}">
+                <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : '/images/avatar.png' }}" class="h-10 w-10 rounded-full hover:scale-105 transition-transform">
+                </a>
+            </div>
         </div>
-        <div class="flex items-center space-x-3">
-            <span class="text-white">
-                {{ auth()->user()->name ?? 'Guest' }}
-            </span>
-            <img src="/images/avatar.png" alt="Avatar" class="h-10 w-10 rounded-full">
-        </div>
-    </div>
 
-    {{-- Search --}}
-    <div class="flex justify-end mt-10 mb-6">
-        <input type="text" placeholder="Search"
-            class="rounded-full px-6 py-2 border border-gray-300 w-72 shadow focus:outline-none focus:ring focus:border-blue-400" />
-    </div>
 
-    {{-- Kategori --}}
-    <div class="flex items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800 mr-4">Kategori</h2>
-        <div class="flex-1 h-1 bg-blue-900"></div>
-    </div>
+   <div class="flex items-center justify-between mt-10 mb-6">
+  <!-- Kiri: Kategori + Garis -->
+  <div class="flex items-center gap-4 flex-1">
+    <h2 class="text-2xl sm:text-3xl font-poppins font-bold text-navy whitespace-nowrap">
+      Kategori
+    </h2>
+    <div class="h-1 bg-navy rounded-full w-full"></div>
+  </div>
+
+  <!-- Kanan: Search -->
+  <input
+    type="text"
+    placeholder="Search"
+    class="ml-6 rounded-full px-6 py-2 border border-gray-300 w-72 shadow focus:outline-none focus:ring focus:border-blue-400"
+  />
+</div>
+
 
     <div class="flex flex-wrap gap-4 mb-10">
         @foreach($categories as $cat)
