@@ -16,7 +16,7 @@
             <div class="flex items-center space-x-8 text-white">
                 <img src="https://media.discordapp.net/attachments/755299102148919317/1384821190991806534/Logo_SL.png?ex=6859c17c&is=68586ffc&hm=cd526f9f63c9da0af4f8fbc246789893e4ccf8683b9298a9f02836564d9d9f7a&=&format=webp&quality=lossless&width=930&height=930" alt="Logo" class="h-8">
                 <a href="{{ route('home') }}" class="font-semibold hover:underline">Home</a>
-                <a href="{{ route('kursus.index') }}" class="font-semibold hover:underline">Kursus</a>
+                <a href="{{ route('kursus.index') }}" class="hover:underline">Kursus</a>
                 <a href="{{ route('kursus-saya') }}" class="hover:underline">Kursus Saya</a>
 
             </div>
@@ -46,29 +46,29 @@
                     <button class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">Cari Materi</button>
                 </div>
 
-                <!-- Pengumuman & Banner -->
+                <!-- Poster -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Pengumuman -->
-                    <div class="bg-white rounded-2xl shadow p-4">
-                        <h3 class="text-xl font-bold mb-3">Pengumuman</h3>
+                    <!-- kursus yang di ikuti -->
+                    <div class="bg-white rounded-2xl shadow p-4 text-navy ">
+                        <h3 class="text-xl font-dm font-bold mb-3">Kursus yang di ikuti</h3>
                         <ul class="space-y-3">
                             <li class="border rounded-xl p-2">
-                                <p class="font-semibold">Hari Libur Nasional</p>
-                                <p class="text-sm text-gray-500">Memperingati Hari Pahlawan</p>
+                                <p class="font-semibold">Gravitasi</p>
+                                <p class="text-sm text-gray-500">Fisika</p>
                             </li>
                             <li class="border rounded-xl p-2">
-                                <p class="font-semibold">Tahun Baru</p>
-                                <p class="text-sm text-gray-500">Liburan Tahun Baru</p>
+                                <p class="font-semibold">Gravitasi</p>
+                                <p class="text-sm text-gray-500">Fisika</p>
                             </li>
                             <li class="border rounded-xl p-2">
-                                <p class="font-semibold">Libur Natal</p>
-                                <p class="text-sm text-gray-500">Liburan Natal</p>
+                                <p class="font-semibold">Gravitasi</p>
+                                <p class="text-sm text-gray-500">Fisika</p>
                             </li>
                         </ul>
                     </div>
                     <!-- Banner -->
                     <div class="relative">
-                        <img src="/images/banner.jpg" alt="Belajar" class="rounded-2xl shadow object-cover w-full h-full">
+                        <img src="{{ asset('images/swiftlearn-poster.png') }}" alt="Belajar" class="rounded-2xl shadow object-cover w-full h-full">
                         <div>
                             
                         </div>

@@ -113,7 +113,9 @@ Route::middleware(['auth', 'mentor'])->group(function () {
 });
 Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('dashboard.mentor');
 
-
+Route::get('/upload-materi', function () {
+  return view('upload-materi');
+});
 
 
 

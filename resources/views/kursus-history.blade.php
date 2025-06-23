@@ -53,7 +53,7 @@
 
     <!-- Main Content -->
     <div class="bg-white rounded-3xl shadow-md p-8 max-w-6xl mx-auto">
-        <h1 class="text-3xl font-dm font-extrabold text-navy mb-8">Kursus Saya</h1>
+        <h1 class="text-3xl font-poppins font-bold text-navy mb-8">Kursus Saya</h1>
 
         @php
         $courses = [
@@ -68,7 +68,7 @@
 
         <div class="space-y-4">
             @foreach($courses as $course)
-            <div class="flex justify-between items-center bg-gray-100 rounded-2xl px-6 py-5 shadow-sm">
+            <div class="flex justify-between items-center bg-gray-100 rounded-2xl px-6 py-5 shadow-sm font-dm">
                 <div>
                     <h2 class="font-bold text-blue-900">{{ $course['title'] }}</h2>
                     <p class="text-sm text-gray-500 mt-1">
