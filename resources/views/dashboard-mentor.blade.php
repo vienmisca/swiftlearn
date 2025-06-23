@@ -78,8 +78,8 @@
 
     <!-- Main Content -->
     <main class="lg:col-span-6 bg-white rounded-2xl shadow-md p-6">
-      <h2 class="text-2xl font-mb font-bold text-blue-900 mb-4">Kursus Anda</h2>
-      <div class="space-y-4">
+      <h2 class="text-2xl font-poppins font-bold text-blue-900 mb-4">Kursus Anda</h2>
+      <div class="font-dm space-y-4">
         <div class="bg-gray-100 p-4 rounded-xl shadow-sm">
           <p class="font-bold text-blue-900">Kelas Gravitasi : belajar Tentang Gravitasi</p>
           <p class="text-sm text-gray-600">Materi : <span class="text-blue-900">Fisika</span></p>
@@ -109,7 +109,7 @@
 
       <!-- Upload Kursus -->
 <div class="bg-white rounded-2xl p-6 shadow-md">
-  <h2 class="text-2xl font-bold text-blue-900 mb-4">Upload Kursus</h2>
+  <h2 class="text-2xl font-poppins font-bold text-blue-900 mb-4">Upload Kursus</h2>
   <form>
     <!-- Row: Nama Kursus + Sampul Upload -->
     <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
