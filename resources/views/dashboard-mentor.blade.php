@@ -23,6 +23,7 @@
     <a href="{{ route('mentor.kursus.history') }}" class="text-white font-medium hover:underline">Kursus</a>
     <div x-data="{ open: false }" class="relative">
     <button @click="open = !open">
+      @auth
         <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('images/mentor.png') }}"
      alt="Admin"
      class="w-12 h-12 rounded-full border-4 border-white cursor-pointer">
@@ -35,6 +36,7 @@
         <h2 class="font-bold text-gray-800 mb-3">
     {{ Auth::user()->name }}
 </h2>
+@endauth
 
 
         <form method="POST" action="{{ route('adminmentor.logout') }}">
@@ -80,28 +82,39 @@
     <main class="lg:col-span-6 bg-white rounded-2xl shadow-md p-6">
       <h2 class="text-2xl font-poppins font-bold text-blue-900 mb-4">Kursus Anda</h2>
       <div class="font-dm space-y-4">
-        <div class="bg-gray-100 p-4 rounded-xl shadow-sm">
-          <p class="font-bold text-blue-900">Kelas Gravitasi : belajar Tentang Gravitasi</p>
-          <p class="text-sm text-gray-600">Materi : <span class="text-blue-900">Fisika</span></p>
-        </div>
-        <div class="bg-gray-100 p-4 rounded-xl shadow-sm">
-          <p class="font-bold text-blue-900">Hukum kekekalan</p>
-          <p class="text-sm text-gray-600">Materi : <span class="text-blue-900">Fisika</span></p>
-        </div>
-        <div class="bg-gray-100 p-4 rounded-xl shadow-sm">
-          <p class="font-bold text-blue-900">Hukum newton</p>
-          <p class="text-sm text-gray-600">Materi : <span class="text-blue-900">Fisika</span></p>
-        </div>
-        <div class="bg-gray-100 p-4 rounded-xl shadow-sm">
-          <p class="font-bold text-blue-900">Hukum newton</p>
-          <p class="text-sm text-gray-600">Materi : <span class="text-blue-900">Fisika</span></p>
-        </div>
-      </div>
-      <div class="text-right mt-6">
+  @forelse ($kursusList as $kursus)
+  <div class="bg-gray-100 p-4 rounded-xl shadow-sm flex justify-between items-center">
+    <div>
+      <p class="font-bold text-blue-900">{{ $kursus->nama_kursus }}</p>
+      <p class="text-sm text-gray-600">Kategori: <span class="text-blue-900">{{ $kursus->kategori }}</span></p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="{{ route('mentor.kursus.upload.materi', ['kursus' => $kursus->id]) }}"
+         class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
+         Buat Materi
+      </a>
+
+      <form method="POST" action="{{ route('mentor.kursus.destroy', $kursus->id) }}"
+            onsubmit="return confirm('Yakin ingin menghapus kursus ini?');">
+        @csrf
+        @method('DELETE')
+        <button type="submit"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
+          Hapus
+        </button>
+      </form>
+    </div>
+  </div>
+@empty
+  <p class="text-gray-600">Belum ada kursus.</p>
+@endforelse
+
+</div>
+      {{-- <div class="text-right mt-6">
         <button class="bg-indigo-500 hover:bg-indigo-600 transition text-white px-6 py-2 rounded-xl text-sm font-semibold shadow-md">
           Tampilkan semua
         </button>
-      </div>
+      </div> --}}
     </main>
 
     <!-- Upload + Rating -->
@@ -110,18 +123,17 @@
       <!-- Upload Kursus -->
 <div class="bg-white rounded-2xl p-6 shadow-md">
   <h2 class="text-2xl font-poppins font-bold text-blue-900 mb-4">Upload Kursus</h2>
-  <form>
+  <form method="POST" action="{{ route('mentor.kursus.store') }}" enctype="multipart/form-data">
+  @csrf
+      <input type="hidden" name="kursus_id" value="{{ session('kursus_id') }}">
+
     <!-- Row: Nama Kursus + Sampul Upload -->
     <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-      <input
-        type="text"
-        placeholder="Nama Kursus"
-        class="flex-1 px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-300"
-      />
+      <input name="nama_kursus" value="{{ old('nama_kursus') }}" type="text" placeholder="Nama Kursus" class="flex-1 px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-300" required>
 
       <!-- Sampul Kursus Upload -->
       <label class="flex items-center px-4 py-2 bg-gray-100 border rounded-xl cursor-pointer hover:bg-gray-200 text-gray-700 font-medium">
-        <input type="file" class="hidden" name="sampul_kursus">
+        <input type="file" name="sampul_kursus" class="hidden" required>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
           <path d="M4 3a2 2 0 00-2 2v2a2 2 0 002 2v6a2 2 0 002 2h8a2 2 0 002-2v-6a2 2 0 002-2V5a2 2 0 00-2-2H4zm8 7a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -130,25 +142,28 @@
     </div>
 
     <!-- Deskripsi -->
-    <textarea
-      placeholder="Deskripsi Kursus"
+    <textarea name="deskripsi" placeholder="Deskripsi Kursus"
       class="w-full mb-4 px-4 py-2 rounded-xl border h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
-    ></textarea>
+    required></textarea>
 
     <!-- Kategori + Submit -->
+    
     <div class="flex flex-col md:flex-row gap-4 items-center">
-      <select class="flex-1 px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white">
-        <option>Kategori Kursus</option>
-        <option>Fisika</option>
-        <option>Matematika</option>
-        <option>IPA</option>
-      </select>
-      <button
-        type="submit"
-        class="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold shadow-md"
-      >
-        Buat Materi
-      </button>
+      <select name="kategori" class="flex-1 px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white" req>
+          <option value="">Pilih Kategori</option>
+          <option value="Fisika">Fisika</option>
+          <option value="Matematika">Matematika</option>
+          <option value="IPA">IPA</option>
+          <option value="Bahasa">Bahasa</option>
+          <option value="Kimia">Kimia</option>
+          <option value="Informatika">Informatika</option>
+        </select>
+        <!-- Submit Button -->
+<button type="submit"
+        class=" bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold shadow">
+  Upload Kursus
+</button>
+
     </div>
   </form>
 </div>
