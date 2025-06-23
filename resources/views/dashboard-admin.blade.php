@@ -17,8 +17,10 @@
     <h1 class="text-3xl font-poppins font-bold text-navy tracking-tighter">Admin Dashboard</h1>
     <div x-data="{ open: false }" class="relative">
   <button @click="open = !open">
-    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=admin" alt="Admin"
-         class="w-12 h-12 rounded-full border-4 border-white cursor-pointer">
+    <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('images/admin.png') }}"
+     alt="Admin"
+     class="w-12 h-12 rounded-full border-4 border-white cursor-pointer">
+
   </button>
 
   <!-- Dropdown -->

@@ -16,7 +16,7 @@ class AdminMentorLoginController extends Controller
         $role = Auth::user()->role;
 
         if ($role === 'mentor') {
-            return redirect()->route('mentor.dashboard');
+            return redirect()->route('dashboard.mentor');
         } elseif ($role === 'admin') {
             return redirect()->route('dashboard.admin');
         }

@@ -59,7 +59,8 @@
   </div>
 @endif
 
-    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+    <form id="profileForm" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+
 
       @csrf
 
@@ -128,6 +129,51 @@
         <button type="submit" class="bg-blue-800 hover:bg-blue-900 text-white px-6 py-3 rounded-md shadow">Save</button>
       </div>
     </form>
+    <!-- Modal -->
+<div id="popupModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl shadow-lg w-96 p-6 relative">
+    <!-- Close Button -->
+    <button onclick="closePopup()" class="absolute top-2 right-3 text-gray-500 hover:text-red-600 text-xl font-bold">&times;</button>
+    
+    <h2 class="text-xl font-semibold text-blue-800 mb-4">Profil telah diperbarui!</h2>
+  </div>
+</div>
+
   </div>
 </body>
+<script>
+  const form = document.getElementById('profileForm');
+  const popup = document.getElementById('popupModal');
+  const popupTitle = popup.querySelector('h2');
+  const closeBtn = popup.querySelector('button');
+
+  const selects = document.querySelectorAll('select[name="interests[]"]');
+
+  let isError = false;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const values = Array.from(selects).map(select => select.value).filter(v => v);
+    const unique = new Set(values);
+
+    if (values.length !== unique.size) {
+      isError = true;
+      popupTitle.textContent = 'Duplicate option! Anda tidak boleh memilih materi yang sama.';
+      popup.classList.remove('hidden');
+    } else {
+      isError = false;
+      popupTitle.textContent = 'Profil telah diperbarui!';
+      popup.classList.remove('hidden');
+    }
+  });
+
+  function closePopup() {
+    popup.classList.add('hidden');
+    if (!isError) {
+      form.submit(); // only submit when it's not an error
+    }
+  }
+</script>
+
 </html>

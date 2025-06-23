@@ -82,6 +82,7 @@ Route::middleware(['auth', 'siswa'])->group(function () {
         ];
         return view('pages.kursus-saya', compact('historyCourses'));
     })->name('kursus-saya');
+
 });
 
 
