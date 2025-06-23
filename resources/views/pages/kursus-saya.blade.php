@@ -12,10 +12,10 @@
         <!-- Navbar -->
         <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
             <div class="flex items-center space-x-8 text-white">
-                <img src="https://media.discordapp.net/attachments/755299102148919317/1384821190991806534/Logo_SL.png?ex=6853d2bc&is=6852813c&hm=af2cb050048dd07b8cd18a50ce813fff121ea9163d8ce607270588a5f7f0f5ad&=&format=webp&quality=lossless&width=930&height=930" alt="Logo" class="h-8">
-                <a href="#" class=" hover:underline">Home</a>
-                <a href="#" class=" hover:underline">Kursus</a>
-                <a href="#" class=" font-semibold hover:underline">Kursus Saya</a>
+                <img src="https://media.discordapp.net/attachments/755299102148919317/1384821190991806534/Logo_SL.png?ex=6859c17c&is=68586ffc&hm=cd526f9f63c9da0af4f8fbc246789893e4ccf8683b9298a9f02836564d9d9f7a&=&format=webp&quality=lossless&width=930&height=930" alt="Logo" class="h-8">
+                <a href="{{ route('home') }}" class="font-semibold hover:underline">Home</a>
+                <a href="{{ route('kursus.index') }}" class="font-semibold hover:underline">Kursus</a>
+                <a href="{{ route('kursus-saya') }}" class="hover:underline">Kursus Saya</a>
             </div>
             <div class="flex items-center space-x-3">
                 <span class="text-white">

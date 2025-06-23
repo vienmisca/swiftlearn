@@ -57,4 +57,10 @@ public function isSiswa(): bool
             'password' => 'hashed',
         ];
     }
+    public function getPhotoUrlAttribute()
+{
+    return $this->photo 
+        ? asset('storage/' . $this->photo) 
+        : asset('images/avatar.png');
+}
 }

@@ -18,8 +18,10 @@
             <a href="#" class="text-white font-medium hover:underline">Kursus</a>
             <div x-data="{ open: false }" class="relative">
     <button @click="open = !open">
-        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=vien" alt="Profile"
-             class="w-12 h-12 rounded-full border-4 border-white cursor-pointer">
+        <img src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('images/mentor.png') }}"
+     alt="Admin"
+     class="w-12 h-12 rounded-full border-4 border-white cursor-pointer">
+
     </button>
 
     <!-- Dropdown -->
