@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MateriController;
+use App\Http\Controllers\KursusHistoryController;
 
 
 
@@ -113,9 +115,28 @@ Route::middleware(['auth', 'mentor'])->group(function () {
 });
 Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('dashboard.mentor');
 
-Route::get('/upload-materi', function () {
-  return view('upload-materi');
+// Route::get('/upload-materi', function () {
+//   return view('upload-materi');
+// });
+Route::post('/mentor/kursus/store', [MentorController::class, 'store'])->name('mentor.kursus.store');
+Route::post('/mentor/materi/store', [MateriController::class, 'store'])->name('mentor.materi.store');
+Route::delete('/mentor/kursus/{id}', [MentorController::class, 'destroy'])->name('mentor.kursus.destroy');
+Route::middleware(['auth', 'isMentor'])->group(function () {
+    // ✅ Put this inside the existing isMentor middleware group (you already have it!)
+Route::get('/mentor/kursus/{kursus}/upload-materi', [MateriController::class, 'uploadForm'])
+    ->name('mentor.kursus.upload.materi');
+
+Route::post('/mentor/materi/store', [MateriController::class, 'store'])->name('mentor.materi.store');
+Route::get('/mentor/materi/{id}/edit', [MateriController::class, 'edit'])->name('mentor.edit.materi');
+Route::get('/mentor/materi/{id}/delete', [MateriController::class, 'delete'])->name('mentor.delete.materi');
+Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
+Route::delete('/mentor/materi/{id}', [MateriController::class, 'destroy'])->name('mentor.delete.materi');
+Route::delete('/mentor/materi/{id}/hapus', [MateriController::class, 'destroy'])->name('mentor.materi.delete');
+
+Route::get('/kursus-history', [KursusHistoryController::class, 'index'])->name('kursus.history');
+Route::get('/kursus-history', [KursusHistoryController::class, 'index'])   ->name('mentor.kursus.history');
 });
+
 
 
 

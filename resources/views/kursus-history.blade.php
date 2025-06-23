@@ -55,34 +55,27 @@
     <div class="bg-white rounded-3xl shadow-md p-8 max-w-6xl mx-auto">
         <h1 class="text-3xl font-poppins font-bold text-navy mb-8">Kursus Saya</h1>
 
-        @php
-        $courses = [
-            ['title' => 'Kelas Gravitasi : belajar Tentang Gravitasi', 'category' => 'Fisika', 'date' => '07/05/2025'],
-            ['title' => 'Hukum kekekalan', 'category' => 'Fisika', 'date' => '07/05/2025'],
-            ['title' => 'Hukum newton', 'category' => 'Fisika', 'date' => '07/05/2025'],
-            ['title' => 'Getaran dan Gelombang', 'category' => 'Fisika', 'date' => '07/05/2025'],
-            ['title' => 'Fluida', 'category' => 'Fisika', 'date' => '07/05/2025'],
-            ['title' => 'Fluida', 'category' => 'Fisika', 'date' => '07/05/2025'],
-        ];
-        @endphp
-
         <div class="space-y-4">
-            @foreach($courses as $course)
-            <div class="flex justify-between items-center bg-gray-100 rounded-2xl px-6 py-5 shadow-sm font-dm">
-                <div>
-                    <h2 class="font-bold text-blue-900">{{ $course['title'] }}</h2>
-                    <p class="text-sm text-gray-500 mt-1">
-                        Materi : <span class="text-blue-900 font-semibold">{{ $course['category'] }}</span>
-                    </p>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <p class="text-sm text-gray-600">
-                        Date Uploaded : <span class="font-semibold">{{ $course['date'] }}</span>
-                    </p>
-                    <i data-lucide="more-vertical" class="w-5 h-5 text-gray-500 cursor-pointer"></i>
-                </div>
-            </div>
-            @endforeach
+    @forelse($courses as $course)
+    <div class="flex justify-between items-center bg-gray-100 rounded-2xl px-6 py-5 shadow-sm font-dm">
+        <div>
+            <h2 class="font-bold text-blue-900">{{ $course->nama_kursus }}</h2>
+            <p class="text-sm text-gray-500 mt-1">
+                Materi : <span class="text-blue-900 font-semibold">{{ $course->kategori }}</span>
+            </p>
+        </div>
+        <div class="flex items-center space-x-4">
+            <p class="text-sm text-gray-600">
+                Date Uploaded : <span class="font-semibold">{{ $course->created_at->format('d/m/Y') }}</span>
+            </p>
+            <i data-lucide="more-vertical" class="w-5 h-5 text-gray-500 cursor-pointer"></i>
+        </div>
+    </div>
+    @empty
+    <p class="text-center text-gray-500">Belum ada kursus.</p>
+    @endforelse
+</div>
+
         </div>
     </div>
 
