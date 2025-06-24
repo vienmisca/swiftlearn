@@ -9,7 +9,7 @@
   <style>
     body {
       background-color: #d8ecff;
-      background-image: url('/images/bg-pattern.svg');
+      background-image: url('/images/admin-mentor.png');
       background-size: cover;
       background-repeat: no-repeat;
     }
