@@ -7,7 +7,8 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="h-screen w-screen overflow-hidden flex">
+<body   style="background-image: url('{{ asset('images/logres-background.png') }}');" 
+        class="bg-cover bg-center h-screen w-screen overflow-hidden flex">
 
   <div class="w-[420px] h-full bg-white rounded-r-[45px] shadow-xl px-10 py-10 flex flex-col justify-center">
     <div>
@@ -61,8 +62,6 @@
   </div>
 
   
-  <div class="flex-1 h-full">
-    <img src="#nantibuatbackground" alt="swiftlearing" class="w-full h-full object-cover"/>
-  </div>
+  
 </body>
 </html>

@@ -87,6 +87,12 @@ Route::middleware(['auth', 'siswa'])->group(function () {
 
 });
 
+Route::get('/kursus/{id}/detail', function ($id) {
+    // bisa ambil data kursus dan materi berdasarkan ID jika sudah tersedia
+    $kursus = App\Models\Kursus::findOrFail($id);
+    $materis = $kursus->materis; // jika relasi sudah di-setup
+    return view('pages.kursus-detail', compact('kursus', 'materis'));
+})->name('kursus.detail');
 
     
 /*

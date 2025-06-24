@@ -8,7 +8,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="bg-blue-100 min-h-screen py-10 px-8">
+    <div class="min-h-screen py-10 px-8 bg-cover bg-center"
+     style="background-image: url('{{ asset('images/page.png') }}');">
+
         <!-- Navbar -->
         <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
             <div class="flex items-center space-x-8 text-white">

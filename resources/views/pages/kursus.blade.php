@@ -9,9 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
 </head>
-<body>
+<body style="background-image: url('{{ asset('images/page.png') }}');" class="bg-cover bg-center">
 
-<div class="bg-blue-100 min-h-screen py-10 px-8">
+
+<div class="min-h-screen py-10 px-8">
 
     {{-- Navbar --}}
      <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
