@@ -9,7 +9,7 @@ class Kursus extends Model
     protected $table = 'kursus'; // 👈 Set your actual table name
 
     protected $fillable = [
-        'judul',
+        'nama_kursus',
         'sampul_kursus',
         'deskripsi',
         'kategori',
