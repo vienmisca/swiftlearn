@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ Correct!
 
-class Kursus extends Model
+    class Kursus extends Model
 {
-    protected $table = 'kursus'; // 👈 Set your actual table name
+    use HasFactory;
+
+    protected $table = 'kursus'; // ✅ required if table name is singular
 
     protected $fillable = [
         'nama_kursus',
-        'sampul_kursus',
+        'kategori_id',
         'deskripsi',
-        'kategori',
-        'mentor_id',
+        'thumbnail',
+        'user_id',
     ];
 }
