@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kursuses', function (Blueprint $table) {
-    $table->id();
-    $table->string('judul');
-    $table->string('sampul_kursus');
-    $table->text('deskripsi');
-    $table->string('kategori');
-    $table->unsignedBigInteger('mentor_id');
-    $table->timestamps();
-});
+        Schema::table('materi', function (Blueprint $table) {
+        Schema::rename('materis', 'materi');
 
+        });
     }
 
     /**
@@ -28,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kursuses');
+        Schema::table('materi', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -10,11 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>body { font-family: 'Poppins', sans-serif; }</style>
 </head>
-<body class="bg-blue-100 min-h-screen p-8 relative overflow-x-hidden">
+<body style="background-image: url('{{ asset('images/bg-mentor.png') }}');" class="bg-cover bg-center min-h-screen p-8 relative overflow-auto">
+
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-navy">Buat Materi</h1>
+    <h1 class="text-4xl font-poppins font-extrabold text-navy">Buat Materi</h1>
     <div class="bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full flex items-center space-x-6 shadow-lg">
       <a href="{{ route('dashboard.mentor') }}" class="text-white font-medium hover:underline">Dashboard</a>
       <a href="{{ route('mentor.kursus.history') }}" class="text-white font-medium hover:underline">Kursus</a>
@@ -46,7 +47,7 @@
   <div class="mt-10 bg-blue-600 rounded-2xl flex items-center p-4 space-x-4 text-white">
     <img src="{{ session('sampul_kursus') ? asset('storage/' . session('sampul_kursus')) : 'https://via.placeholder.com/200x140' }}"
          alt="Thumbnail" class="h-40 w-62 object-cover rounded-lg"/>
-    <h2 class="text-2xl font-bold">{{ session('nama_kursus') ?? 'Nama Kursus Tidak Ditemukan' }}</h2>
+    <h2 class="text-2xl font-bold">{{ $kursus->nama_kursus }}</h2>
   </div>
 
   <div class="mt-10 flex flex-col lg:flex-row gap-8">
@@ -55,21 +56,12 @@
       <h3 class="text-xl font-semibold text-[#0B0B7C] mb-4">Upload Materi</h3>
       <form action="{{ route('mentor.materi.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-        <input type="hidden" name="kursus_id" value="{{ session('kursus_id') }}">
+        <input type="hidden" name="kursus_id" value="{{ $kursus->id }}">
 
-        <div class="flex gap-4 mb-4">
+         <div class="flex gap-4 mb-4">
           <input type="text" name="judul" placeholder="Judul Materi"
                  class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
-          <label class="flex items-center gap-2 p-3 bg-gray-100 rounded-lg border border-gray-200 cursor-pointer">
-            <span class="text-gray-400">Sampul Materi</span>
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 class="h-6 w-6 text-gray-500"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0 0l-3-3m3 3l3-3m-3-15a4 4 0 00-4 4v4h8v-4a4 4 0 00-4-4z"/>
-            </svg>
-            <input type="file" name="sampul_materi" accept="image/*" class="hidden"/>
-          </label>
+
         </div>
 
         <textarea name="deskripsi" rows="4" placeholder="Deskripsi Materi"
@@ -78,16 +70,48 @@
         <input type="text" name="google_form_link" placeholder="Link Google Form"
                class="w-full p-3 rounded-lg bg-gray-100 placeholder-gray-400 mb-4"/>
 
-        <div class="flex gap-4 mb-4">
-          <label class="flex-1 p-3 bg-gray-100 rounded-lg border border-gray-200 text-center cursor-pointer">
-            <span class="text-gray-400">Upload Video</span>
-            <input type="file" name="video" accept="video/*" class="hidden"/>
-          </label>
-          <label class="flex-1 p-3 bg-gray-100 rounded-lg border border-gray-200 text-center cursor-pointer">
-            <span class="text-gray-400">Upload PDF</span>
-            <input type="file" name="pdf" accept="application/pdf" class="hidden"/>
-          </label>
-        </div>
+ <div x-data="{ video: '', pdf: '' }" class="flex gap-4 mb-4">
+
+  <!-- Upload Video -->
+ <div class="flex-1">
+  <label class="block w-full p-3 bg-gray-100 rounded-lg border border-gray-200 text-center cursor-pointer">
+    <span class="text-gray-600 font-medium">Upload Video</span>
+    <input type="file" name="video" accept="video/*" class="hidden"
+           @change="video = $event.target.files[0]?.name" />
+  </label>
+
+  <div x-show="video" class="mt-1 overflow-hidden">
+    <p class="text-sm text-green-600 truncate max-w-[120px]" :title="video">
+      <template x-if="video">
+        <span x-text="video.split('.')[0].split(/[\s_-]/)[0] + '...'"></span>
+      </template>
+    </p>
+  </div>
+</div>
+
+
+  <!-- Upload PDF -->
+  <div>
+    <label class="block px-4 py-3 bg-gray-100 rounded-lg border border-gray-200 text-center cursor-pointer">
+      <span class="text-gray-600 font-medium">Upload PDF</span>
+      <input type="file" name="pdf" accept="application/pdf" class="hidden"
+             @change="pdf = $event.target.files[0]?.name" />
+    </label>
+
+    <div x-show="pdf" class="mt-1 overflow-hidden">
+      <p class="text-sm text-green-600 truncate w-[160px]" :title="pdf">
+        <template x-if="pdf.length > 45">
+          <span x-text="pdf.slice(0, 42) + '...'"></span>
+        </template>
+        <template x-if="pdf.length <= 45">
+          <span x-text="pdf"></span>
+        </template>
+      </p>
+    </div>
+  </div>
+
+</div>
+
 
         <button type="submit"
                 class="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 font-semibold">
