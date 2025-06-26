@@ -61,22 +61,6 @@
          <div class="flex gap-4 mb-4">
           <input type="text" name="judul" placeholder="Judul Materi"
                  class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
-          <label class="flex items-center gap-2 p-3 bg-gray-100 rounded-lg border border-gray-200 cursor-pointer">
-            <span class="text-gray-400">Sampul Materi</span>
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 class="h-6 w-6 text-gray-500"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 12v9m0 0l-3-3m3 3l3-3m-3-15a4 4 0 00-4 4v4h8v-4a4 4 0 00-4-4z"/>
-            </svg>
-            <input type="file" name="sampul_materi" accept="image/*" class="hidden"/>
-          </label>
-        </div>
-
-
-        <div class="flex gap-4 mb-4">
-          <input type="text" name="judul" placeholder="Judul Materi"
-                 class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
 
         </div>
 

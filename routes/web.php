@@ -16,6 +16,7 @@ use App\Http\Controllers\KursusHistoryController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -85,14 +86,36 @@ Route::middleware(['auth', 'siswa'])->group(function () {
         return view('pages.kursus-saya', compact('historyCourses'));
     })->name('kursus-saya');
 
+     // ✅ Tampilkan semua kursus
+    Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
+
+    // ✅ Tampilkan detail kursus berdasarkan ID
+    Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
+
 });
 
-Route::get('/kursus/{id}/detail', function ($id) {
-    // bisa ambil data kursus dan materi berdasarkan ID jika sudah tersedia
-    $kursus = App\Models\Kursus::findOrFail($id);
-    $materis = $kursus->materis; // jika relasi sudah di-setup
-    return view('pages.kursus-detail', compact('kursus', 'materis'));
-})->name('kursus.detail');
+Route::get('/kursus/detail-preview', function () {
+    $kursus = (object) [
+        'judul' => 'Teori Relativitas Umum Einstein: Gravitasi dan Benda Langit',
+        'sampul_kursus' => '/images/earth-thumbnail.jpg',
+        'mentor' => (object) ['name' => 'Jhoes'],
+        'rating' => 5.0,
+    ];
+
+    $materis = [
+        (object)['judul' => 'Belajar tentang apa itu Gravitasi'],
+        (object)['judul' => 'Hukum Gravitasi Newton'],
+        (object)['judul' => 'Gravitasi dalam Skala Sehari hari'],
+        (object)['judul' => 'Gravitasi di Luar angkasa'],
+        (object)['judul' => 'Teori Relativitas Dan Gravitasi'],
+    ];
+
+    return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
+})->name('kursus.detail.preview');
+
+Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
+
+
 
     
 /*

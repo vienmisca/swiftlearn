@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materi', function (Blueprint $table) {
+        Schema::create('materis', function (Blueprint $table) {
     $table->id();
     $table->string('judul');
-    $table->text('konten')->nullable();
-    $table->foreignId('kursus_id')->constrained('kursus')->onDelete('cascade');
+    $table->text('deskripsi')->nullable();
+    $table->string('video')->nullable();
+    $table->string('pdf')->nullable();
+    $table->string('google_form_link')->nullable();
+    $table->foreignId('kursus_id')->constrained()->onDelete('cascade');
     $table->timestamps();
 });
+
 
     }
 

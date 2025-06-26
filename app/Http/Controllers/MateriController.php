@@ -17,16 +17,13 @@ class MateriController extends Controller
             'deskripsi' => 'nullable|string',
             'google_form_link' => 'nullable|url',
             'kursus_id' => 'required|exists:kursus,id',
-            'sampul_materi' => 'nullable|image',
             'video' => 'nullable|mimes:mp4,mov,avi|max:51200',
             'pdf' => 'nullable|mimes:pdf|max:20480',
         ]);
 
         $data = $request->only(['judul', 'deskripsi', 'google_form_link', 'kursus_id']);
 
-        if ($request->hasFile('sampul_materi')) {
-            $data['sampul_materi'] = $request->file('sampul_materi')->store('materi/sampul', 'public');
-        }
+
 
         if ($request->hasFile('video')) {
             $data['video'] = $request->file('video')->store('materi/video', 'public');
