@@ -56,9 +56,16 @@
       <h3 class="text-xl font-semibold text-[#0B0B7C] mb-4">Upload Materi</h3>
       <form action="{{ route('mentor.materi.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
-        <input type="hidden" name="kursus_id" value="{{ session('kursus_id') }}">
+        <input type="hidden" name="kursus_id" value="{{ $kursus->id }}">
 
          <div class="flex gap-4 mb-4">
+          <input type="text" name="judul" placeholder="Judul Materi"
+                 class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
+
+        </div>
+
+
+        <div class="flex gap-4 mb-4">
           <input type="text" name="judul" placeholder="Judul Materi"
                  class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
 

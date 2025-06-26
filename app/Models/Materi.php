@@ -9,7 +9,19 @@ class Materi extends Model
 {
     use HasFactory;
 
-    protected $table = 'materi'; // ✅ This fixes the table name
+    protected $table = 'materi'; // ✅ necessary if your table is NOT plural
 
-    protected $fillable = ['judul', 'konten', 'kursus_id']; // optional
+    protected $fillable = [
+        'judul',
+        'deskripsi',
+        'google_form_link',
+        'kursus_id',
+        'video',
+        'pdf',
+    ];
+    public function kursus()
+{
+    return $this->belongsTo(Kursus::class); // this is fine
+}
+
 }

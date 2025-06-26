@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Materi;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ Correct!
 
-class Kursus extends Model
+    class Kursus extends Model
 {
-    protected $table = 'kursus'; // Nama tabel di database
 
+    protected $table = 'kursus'; // ✅ required if table name is singular
     protected $fillable = [
         'nama_kursus',
-        'sampul_kursus',
+        'kategori_id',
         'deskripsi',
-        'kategori',
-        'mentor_id',
+        'thumbnail',
+        'user_id',
     ];
 
     /**

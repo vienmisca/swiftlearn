@@ -18,7 +18,7 @@ return new class extends Migration
     $table->string('video')->nullable();
     $table->string('pdf')->nullable();
     $table->string('google_form_link')->nullable();
-    $table->foreignId('kursus_id')->constrained()->onDelete('cascade');
+    $table->foreignId('kursus_id')->constrained('kursus')->onDelete('cascade'); // ✅ correct
     $table->timestamps();
 });
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materi');
+        Schema::dropIfExists('materis');
     }
 };

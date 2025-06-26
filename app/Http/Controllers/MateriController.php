@@ -11,32 +11,36 @@ class MateriController extends Controller
 {
     // Handle uploading of new materi
     public function store(Request $request)
-    {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'google_form_link' => 'nullable|url',
-            'kursus_id' => 'required|exists:kursus,id',
-            'video' => 'nullable|mimes:mp4,mov,avi|max:51200',
-            'pdf' => 'nullable|mimes:pdf|max:20480',
-        ]);
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'deskripsi' => 'nullable|string',
+        'google_form_link' => 'nullable|url',
+        'kursus_id' => 'required|exists:kursus,id',
+        'video' => 'nullable|mimes:mp4,mov,avi|max:51200',
+        'pdf' => 'nullable|mimes:pdf|max:20480',
+    ]);
 
-        $data = $request->only(['judul', 'deskripsi', 'google_form_link', 'kursus_id']);
+    $data = $request->only(['judul', 'deskripsi', 'google_form_link', 'kursus_id']);
 
-
-
-        if ($request->hasFile('video')) {
-            $data['video'] = $request->file('video')->store('materi/video', 'public');
-        }
-
-        if ($request->hasFile('pdf')) {
-            $data['pdf'] = $request->file('pdf')->store('materi/pdf', 'public');
-        }
-
-        Materi::create($data);
-
-        return back()->with('success', 'Materi berhasil diunggah.');
+    if ($request->hasFile('video')) {
+        $data['video'] = $request->file('video')->store('materi/video', 'public');
     }
+
+    if ($request->hasFile('pdf')) {
+        $data['pdf'] = $request->file('pdf')->store('materi/pdf', 'public');
+    }
+
+    Materi::create($data);
+
+    // ✅ Fix: retrieve the kursus
+    $kursus = Kursus::findOrFail($data['kursus_id']);
+
+    return redirect()
+        ->route('mentor.kursus.upload.materi', ['kursus' => $kursus->id])
+        ->with('success', 'Materi berhasil diunggah.');
+}
+
 
     // Display upload form for a specific kursus
     public function uploadForm(Kursus $kursus)
@@ -54,19 +58,20 @@ class MateriController extends Controller
 
     // Fallback: show upload form from session
     public function showUploadForm()
-    {
-        $kursus_id = session('kursus_id');
+{
+    $kursus_id = session('kursus_id');
 
-        if (!$kursus_id) {
-            return redirect()->route('mentor.kursus.history')->with('error', 'Kursus tidak ditemukan di sesi.');
-        }
-
-        $materis = Materi::where('kursus_id', $kursus_id)->get();
-        $judul = session('judul');
-        $sampul_kursus = session('sampul_kursus');
-
-        return view('upload-materi', compact('materis', 'judul', 'sampul_kursus'));
+    if (!$kursus_id) {
+        return redirect()->route('mentor.kursus.history')->with('error', 'Kursus tidak ditemukan di sesi.');
     }
+
+    $materis = Materi::where('kursus_id', $kursus_id)->get();
+    $kursus = Kursus::findOrFail($kursus_id); // ✅ add this
+
+    
+    return view('upload-materi', compact('materis', 'kursus')); // ✅ pass $kursus too
+}
+
 
     // Edit a materi
     public function edit($id)
