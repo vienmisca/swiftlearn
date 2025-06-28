@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Kursus;
 use Illuminate\Http\Request;
 
 class KursusController extends Controller
@@ -12,45 +13,46 @@ class KursusController extends Controller
         // Ambil semua kategori dengan jumlah kursus
         $categories = Category::withCount('courses')->get();
 
-        // Ambil semua kursus, dikelompokkan berdasarkan kategori
-        $groupedCourses = Category::with('courses')->get()->mapWithKeys(function ($category) {
-            return [$category->name => $category->courses];
-        });
+        // Ambil semua kursus dan kelompokkan berdasarkan kategori
+        $groupedCourses = Kursus::all()->groupBy('kategori');
 
-        // Kirim data ke view 'pages.kursus'
-       return view('pages.kursus', compact('categories', 'groupedCourses'));
-
+        return view('pages.kursus', compact('categories', 'groupedCourses'));
     }
+
     public function store(Request $request)
-{
-    $validated = $request->validate([
-        'nama_kursus' => 'required|string|max:255',
-        'deskripsi' => 'nullable|string',
-        'sampul' => 'nullable|image',
-    ]);
+    {
+        $validated = $request->validate([
+            'nama_kursus' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kategori' => 'required|string|max:100',
+            'sampul_kursus' => 'nullable|image|max:2048',
+        ]);
 
-    if ($request->hasFile('sampul')) {
-        $validated['sampul'] = $request->file('sampul')->store('kursus', 'public');
+        if ($request->hasFile('sampul_kursus')) {
+            $validated['sampul_kursus'] = $request->file('sampul_kursus')->store('kursus', 'public');
+        }
+
+        $validated['mentor_id'] = auth()->id();
+
+        $kursus = Kursus::create($validated);
+
+        session([
+            'nama_kursus' => $kursus->nama_kursus,
+            'sampul_kursus' => $kursus->sampul_kursus,
+        ]);
+
+        return redirect()->route('mentor.upload.materi', ['kursus_id' => $kursus->id])
+            ->with('success', 'Kursus berhasil dibuat. Silakan upload materi.');
     }
 
-    $validated['mentor_id'] = auth()->id();
+    public function show($id)
+    {
+        // Ambil kursus beserta relasi mentor dan materis
+        $kursus = Kursus::with(['materis', 'mentor'])->findOrFail($id);
 
-    $kursus = Kursus::create($validated);
+        // Ambil materi secara terpisah untuk digunakan di Blade
+        $materis = $kursus->materis;
 
-    // ✅ Set session flash for display on the Buat Materi page
-    session([
-        'nama_kursus' => $kursus->nama_kursus,
-        'sampul_kursus' => $kursus->sampul,
-    ]);
-
-    return redirect()->route('mentor.upload.materi', ['kursus_id' => $kursus->id])
-    ->with('success', 'Kursus berhasil dibuat. Silakan upload materi.');
-
-}
-// public function showUploadForm()
-// {
-//     $materis = \App\Models\Materi::where('kursus_id', session('kursus_id'))->get();
-//     return view('mentor.upload-materi', compact('materis'));
-// }
-
+        return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
+    }
 }
