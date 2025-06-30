@@ -39,10 +39,10 @@
 
   <!-- Form Content -->
   <div class="w-3/4 px-16 py-10 relative ">
-    <!-- Stars Background -->
+    {{-- <!-- Stars Background -->
     <div class="absolute top-0 right-0">
       <img src="/images/stars.svg" alt="Star Decoration" class="w-52 opacity-30">
-    </div>
+    </div> --}}
 
     <h1 class="text-4xl font-dm font-extrabold text-blue-900 tracking-tighter mb-6">Ubah Profile</h1>
 @if (session('success'))

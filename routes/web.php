@@ -1,21 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\SiswaLoginController;
 use App\Http\Controllers\Auth\SiswaRegisterController;
 use App\Http\Controllers\Auth\AdminMentorLoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KursusController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\KursusHistoryController;
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -38,28 +34,20 @@ Route::post('/admin-mentor/login', [AdminMentorLoginController::class, 'login'])
 | Siswa Routes (Requires 'siswa' role)
 |--------------------------------------------------------------------------
 */
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::middleware(['auth', 'siswa'])->group(function () {
-    Route::get('/home', fn () => view('pages.home'))->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // ✅ Profile - Display
-    Route::get('/profile', function () {
-        $user = auth()->user();
-        return view('profile.profile', compact('user'));
-    })->name('profile');
-
-    // ✅ Profile - Edit Form
-    Route::get('/profile/edit', function () {
-        $user = auth()->user();
-        return view('profile.profile-edit', compact('user'));
-    })->name('profile.edit');
-
-    // ✅ Profile - Update Handler
+    // Profile routes
+    Route::get('/profile', fn () => view('profile.profile', ['user' => auth()->user()]))->name('profile');
+    Route::get('/profile/edit', fn () => view('profile.profile-edit', ['user' => auth()->user()]))->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
-    // ✅ Kursus
+    // Kursus routes
     Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
+    Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
+    Route::get('/api/kursus', [KursusController::class, 'api']);
 
+    // Kursus Saya - dummy data for now
     Route::get('/kursus-saya', function () {
         $historyCourses = [
             (object)[
@@ -85,23 +73,16 @@ Route::middleware(['auth', 'siswa'])->group(function () {
         ];
         return view('pages.kursus-saya', compact('historyCourses'));
     })->name('kursus-saya');
-
-     // ✅ Tampilkan semua kursus
-    Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
-
-    // ✅ Tampilkan detail kursus berdasarkan ID
-    Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
-
 });
 
+// Preview detail kursus (UI only)
 Route::get('/kursus/detail-preview', function () {
-    $kursus = (object) [
+    $kursus = (object)[
         'judul' => 'Teori Relativitas Umum Einstein: Gravitasi dan Benda Langit',
         'sampul_kursus' => '/images/earth-thumbnail.jpg',
-        'mentor' => (object) ['name' => 'Jhoes'],
+        'mentor' => (object)['name' => 'Jhoes'],
         'rating' => 5.0,
     ];
-
     $materis = [
         (object)['judul' => 'Belajar tentang apa itu Gravitasi'],
         (object)['judul' => 'Hukum Gravitasi Newton'],
@@ -109,15 +90,9 @@ Route::get('/kursus/detail-preview', function () {
         (object)['judul' => 'Gravitasi di Luar angkasa'],
         (object)['judul' => 'Teori Relativitas Dan Gravitasi'],
     ];
-
     return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
 })->name('kursus.detail.preview');
 
-Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
-
-
-
-    
 /*
 |--------------------------------------------------------------------------
 | Mentor Routes (Requires 'mentor' role)
@@ -126,49 +101,19 @@ Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show
 Route::middleware(['auth', 'mentor'])->group(function () {
     Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('dashboard.mentor');
 
-    Route::get('/kursus-history', function () {
-        $historyCourses = [
-            (object)[
-                'title' => 'Kelas Gravitasi : belajar Tentang Gravitasi',
-                'thumbnail_url' => '/images/gravitasi.jpg',
-                'category_name' => 'Fisika',
-            ],
-            (object)[
-                'title' => 'Belajar Tentang CSS dan HTML',
-                'thumbnail_url' => '/images/css_html.jpg',
-                'category_name' => 'Informatika',
-            ],
-        ];
-        return view('kursus-history', compact('historyCourses'));
-    })->name('mentor.kursus.history');
+    // Kursus & Materi Management
+    Route::delete('/mentor/kursus/{id}', [MentorController::class, 'destroy'])->name('mentor.kursus.destroy');
+    Route::get('/mentor/kursus/{kursus}/upload-materi', [MateriController::class, 'uploadForm'])->name('mentor.kursus.upload.materi');
+    Route::post('/mentor/materi/store', [MateriController::class, 'store'])->name('mentor.materi.store');
+    Route::get('/mentor/materi/{id}/edit', [MateriController::class, 'edit'])->name('mentor.edit.materi');
+    Route::get('/mentor/materi/{id}/delete', [MateriController::class, 'delete'])->name('mentor.delete.materi');
+    Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
+    Route::delete('/mentor/materi/{id}', [MateriController::class, 'destroy'])->name('mentor.materi.delete');
+    Route::post('/mentor/kursus/store', [MentorController::class, 'store'])->name('mentor.kursus.store');
+
+    // Kursus History (real implementation)
+    Route::get('/kursus-history', [KursusHistoryController::class, 'index'])->name('mentor.kursus.history');
 });
-Route::get('/dashboard-mentor', [MentorController::class, 'dashboard'])->name('dashboard.mentor');
-
-// Route::get('/upload-materi', function () {
-//   return view('upload-materi');
-// });
-Route::post('/mentor/kursus/store', [MentorController::class, 'store'])->name('mentor.kursus.store');
-Route::post('/mentor/materi/store', [MateriController::class, 'store'])->name('mentor.materi.store');
-Route::delete('/mentor/kursus/{id}', [MentorController::class, 'destroy'])->name('mentor.kursus.destroy');
-Route::middleware(['auth', 'isMentor'])->group(function () {
-    // ✅ Put this inside the existing isMentor middleware group (you already have it!)
-Route::get('/mentor/kursus/{kursus}/upload-materi', [MateriController::class, 'uploadForm'])
-    ->name('mentor.kursus.upload.materi');
-
-Route::post('/mentor/materi/store', [MateriController::class, 'store'])->name('mentor.materi.store');
-Route::get('/mentor/materi/{id}/edit', [MateriController::class, 'edit'])->name('mentor.edit.materi');
-Route::get('/mentor/materi/{id}/delete', [MateriController::class, 'delete'])->name('mentor.delete.materi');
-Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
-Route::delete('/mentor/materi/{id}', [MateriController::class, 'destroy'])->name('mentor.delete.materi');
-Route::delete('/mentor/materi/{id}/hapus', [MateriController::class, 'destroy'])->name('mentor.materi.delete');
-
-Route::get('/kursus-history', [KursusHistoryController::class, 'index'])->name('kursus.history');
-Route::get('/kursus-history', [KursusHistoryController::class, 'index'])   ->name('mentor.kursus.history');
-});
-
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -186,18 +131,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Route::get('/profile', function () {
-    //     return view('profile.profile');
-    // })->name('profile');
-
-
-    // Logout for Admin/Mentor
     Route::post('/admin-mentor/logout', [AdminMentorLoginController::class, 'logout'])->name('adminmentor.logout');
 });
 
+// Logout for siswa
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
@@ -207,16 +144,14 @@ Route::post('/logout', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Auth Scaffolding (Optional)
+| Materi UI Test Route
 |--------------------------------------------------------------------------
 */
-require __DIR__.'/auth.php';
+Route::get('/materi-test', fn () => view('pages.materi.materi'))->name('materi.test');
 
 /*
 |--------------------------------------------------------------------------
-| Materi Test Route (UI Saja)
+| Laravel Auth Scaffolding (Optional)
 |--------------------------------------------------------------------------
 */
-Route::get('/materi-test', function () {
-    return view('pages.materi.materi');
-})->name('materi.test');
+require __DIR__.'/auth.php';
