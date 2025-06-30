@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ Correct!
     protected $table = 'kursus'; // ✅ required if table name is singular
     protected $fillable = [
         'nama_kursus',
-        'kategori_id',
         'deskripsi',
-        'thumbnail',
-        'user_id',
+        'kategori',
+        'sampul_kursus',
+        'mentor_id',
     ];
 
     /**
@@ -34,4 +34,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ Correct!
     {
         return $this->belongsTo(User::class, 'mentor_id');
     }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class, 'kategori', 'id'); // adjust foreign key if needed
+    // }
 }

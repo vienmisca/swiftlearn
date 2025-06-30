@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Kursus;
-
+use App\Models\Materi;
 
 class MentorController extends Controller
 {
     public function dashboard()
 {
-    $jumlahSiswa = User::where('role', 'siswa')->count();
     $mentorId = auth()->id();
 
     $kursusList = Kursus::where('mentor_id', $mentorId)->get();
+    $jumlahSiswa = \App\Models\User::where('role', 'siswa')->count(); // assuming 'role' is used
 
-    return view('dashboard-mentor', compact('jumlahSiswa', 'kursusList'));
+    // Count courses and materials by mentor
+    $jumlahKursus = $kursusList->count();
+    $jumlahMateri = Materi::whereIn('kursus_id', $kursusList->pluck('id'))->count();
+
+    return view('dashboard-mentor', compact('kursusList', 'jumlahSiswa', 'jumlahKursus', 'jumlahMateri'));
 }
 
 

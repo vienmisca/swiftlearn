@@ -8,16 +8,34 @@ use Illuminate\Http\Request;
 
 class KursusController extends Controller
 {
-    public function index()
+        public function index()
     {
-        // Ambil semua kategori dengan jumlah kursus
-        $categories = Category::withCount('courses')->get();
+        $categories = ['IPA', 'Matematika', 'Bahasa', 'Kimia', 'Fisika', 'Informatika'];
 
-        // Ambil semua kursus dan kelompokkan berdasarkan kategori
-        $groupedCourses = Kursus::all()->groupBy('kategori');
+        $groupedCourses = [];
+        foreach ($categories as $kategori) {
+            $groupedCourses[$kategori] = Kursus::where('kategori', $kategori)->get();
+        }
 
-        return view('pages.kursus', compact('categories', 'groupedCourses'));
+        return view('pages.kursus', compact('groupedCourses'));
     }
+    public function api(Request $request)
+    {
+        $perPage = 4;
+        $kategori = $request->input('kategori');
+        $search = $request->input('search');
+
+        $query = Kursus::query()->where('kategori', $kategori);
+
+        if ($search) {
+            $query->where('nama_kursus', 'ILIKE', '%' . $search . '%');
+        }
+
+        $kursus = $query->paginate($perPage);
+
+        return response()->json($kursus);
+    }
+
 
     public function store(Request $request)
     {
@@ -32,7 +50,7 @@ class KursusController extends Controller
             $validated['sampul_kursus'] = $request->file('sampul_kursus')->store('kursus', 'public');
         }
 
-        $validated['mentor_id'] = auth()->id();
+        $validated['mentor_id'] = auth('mentor')->id();
 
         $kursus = Kursus::create($validated);
 
@@ -41,7 +59,7 @@ class KursusController extends Controller
             'sampul_kursus' => $kursus->sampul_kursus,
         ]);
 
-        return redirect()->route('mentor.upload.materi', ['kursus_id' => $kursus->id])
+        return redirect()->route('mentor.kursus.upload.materi', ['kursus' => $kursus->id])
             ->with('success', 'Kursus berhasil dibuat. Silakan upload materi.');
     }
 

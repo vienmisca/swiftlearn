@@ -40,4 +40,3 @@ class AdminMentorSeeder extends Seeder
         }
     }
 }
-

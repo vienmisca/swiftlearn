@@ -8,15 +8,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('kursus', function (Blueprint $table) {
-    $table->id();
-    $table->string('nama_kursus'); // ← ADD THIS if missing
-    $table->string('sampul_kursus');
-    $table->text('deskripsi');
-    $table->string('kategori');
-    $table->foreignId('mentor_id')->constrained('users')->onDelete('cascade');
-    $table->timestamps();
-});
-
+            $table->id();
+            $table->string('nama_kursus');
+            $table->string('sampul_kursus')->nullable(); // ✅ allow nulls if needed
+            $table->text('deskripsi');
+            $table->string('kategori')->nullable(); // ✅ make optional if sometimes empty
+            $table->foreignId('mentor_id')->constrained('users')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     public function down(): void
@@ -24,5 +23,3 @@ return new class extends Migration {
         Schema::dropIfExists('kursus');
     }
 };
-
-
