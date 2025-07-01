@@ -37,7 +37,7 @@ class MentorController extends Controller
     $sampulPath = $request->file('sampul_kursus')->store('kursus_sampul', 'public');
 
     // Save to database
-    $kursus = \App\Models\Kursus::create([
+    $kursus = Kursus::create([
         'nama_kursus' => $request->nama_kursus,
         'sampul_kursus' => $sampulPath,
         'deskripsi' => $request->deskripsi,
@@ -67,6 +67,33 @@ public function showUploadForm()
     return view('upload-materi', compact('materis'));
 }
 
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nama_kursus' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'kategori' => 'required|string',
+        'sampul_kursus' => 'nullable|image|max:2048',
+    ]);
 
+    $kursus = Kursus::findOrFail($id);
+    $kursus->nama_kursus = $request->nama_kursus;
+    $kursus->deskripsi = $request->deskripsi;
+    $kursus->kategori = $request->kategori;
+
+    if ($request->hasFile('sampul_kursus')) {
+        $filename = $request->file('sampul_kursus')->store('sampul', 'public');
+        $kursus->sampul_kursus = $filename;
+    }
+
+    $kursus->save();
+
+    return redirect()->back()->with('success', 'Kursus berhasil diperbarui.');
+}
+public function edit($id)
+{
+    $kursus = Kursus::where('mentor_id', auth()->id())->findOrFail($id);
+    return view('edit-kursus', compact('kursus'));
+}
 }
 
