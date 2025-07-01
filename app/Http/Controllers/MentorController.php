@@ -67,6 +67,31 @@ public function showUploadForm()
     return view('upload-materi', compact('materis'));
 }
 
+public function update(Request $request, $id)
+{
+    $kursus = Kursus::findOrFail($id);
+
+    $request->validate([
+        'nama_kursus' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'kategori' => 'required|string',
+        'sampul_kursus' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
+
+    $kursus->nama_kursus = $request->nama_kursus;
+    $kursus->deskripsi = $request->deskripsi;
+    $kursus->kategori = $request->kategori;
+
+    if ($request->hasFile('sampul_kursus')) {
+        $file = $request->file('sampul_kursus');
+        $path = $file->store('sampul', 'public');
+        $kursus->sampul_kursus = $path;
+    }
+
+    $kursus->save();
+
+    return redirect()->back()->with('success', 'Kursus berhasil diperbarui.');
+}
 
 }
 

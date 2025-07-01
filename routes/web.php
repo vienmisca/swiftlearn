@@ -118,6 +118,9 @@ Route::middleware(['auth', 'mentor'])->group(function () {
     Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
     Route::delete('/mentor/materi/{id}', [MateriController::class, 'destroy'])->name('mentor.materi.delete');
     Route::post('/mentor/kursus/store', [MentorController::class, 'store'])->name('mentor.kursus.store');
+    Route::put('/mentor/kursus/{id}/update', [MentorController::class, 'update'])->name('mentor.kursus.update');
+
+
 
     // Kursus History (real implementation)
     Route::get('/kursus-history', [KursusHistoryController::class, 'index'])->name('mentor.kursus.history');
@@ -131,6 +134,8 @@ Route::middleware(['auth', 'mentor'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard-admin', [AdminController::class, 'index'])->name('dashboard.admin');
     Route::delete('/admin/siswa/{id}', [AdminController::class, 'deleteSiswa'])->name('siswa.delete');
+    Route::delete('/admin/kursus/{id}', [AdminController::class, 'destroyKursus'])->name('admin.kursus.delete');
+
 });
 
 /*

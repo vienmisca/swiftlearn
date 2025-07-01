@@ -11,29 +11,29 @@ class AdminController extends Controller
 {
     public function index(Request $request)
 {
-    $search = $request->input('search');
+    $searchSiswa = $request->input('search_siswa');
+    $searchKursus = $request->input('search_kursus');
 
     $siswaList = User::where('role', 'siswa')
-        ->when($search, function ($query, $search) {
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
-        })
-        ->paginate(10);
+        ->when($searchSiswa, fn($query) => $query->where('name', 'like', '%' . $searchSiswa . '%'))
+        ->paginate(5, ['*'], 'siswa');
 
-    $jumlahSiswa = User::where('role', 'siswa')->count();
-    $jumlahMentor = User::where('role', 'mentor')->count();
-    $jumlahKursus = Kursus::count();
-    $jumlahMateri = Materi::count();
+    $kursusList = Kursus::with('mentor')
+        ->when($searchKursus, fn($query) => $query->where('nama_kursus', 'like', '%' . $searchKursus . '%'))
+        ->paginate(5, ['*'], 'kursus');
 
     return view('dashboard-admin', [
+        'jumlahSiswa' => User::where('role', 'siswa')->count(),
+        'jumlahMentor' => User::where('role', 'mentor')->count(),
+        'jumlahKursus' => Kursus::count(),
+        'jumlahMateri' => Materi::count(),
         'siswaList' => $siswaList,
-        'jumlahSiswa' => $jumlahSiswa,
-        'jumlahMentor' => $jumlahMentor,
-        'jumlahKursus' => $jumlahKursus,
-        'jumlahMateri' => $jumlahMateri,
-        'search' => $search,
+        'kursusList' => $kursusList,
+        'searchSiswa' => $searchSiswa, // ✅ Now passed to Blade
+        'searchKursus' => $searchKursus, // ✅ Also passed
     ]);
 }
+
 
     public function deleteSiswa($id)
     {
@@ -42,4 +42,12 @@ class AdminController extends Controller
 
         return redirect()->route('dashboard.admin')->with('success', 'Siswa berhasil dihapus.');
     }
+    public function destroyKursus($id)
+{
+    $kursus = Kursus::findOrFail($id);
+    $kursus->delete();
+
+    return redirect()->back()->with('success', 'Kursus berhasil dihapus.');
+}
+
 }
