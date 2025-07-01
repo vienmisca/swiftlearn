@@ -48,42 +48,36 @@ export default function KursusPage({ groupedCourses }) {
             <button
               key={cat}
               onClick={() => toggleCategory(cat)}
-              className={`relative w-40 h-24 rounded-2xl shadow-md px-4 py-3 text-left transition-all duration-300 ${style.bg}`}
+              className={`relative w-40 h-24 rounded-2xl shadow-md px-4 py-3 text-left transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${style.bg}`}
             >
               {/* Emoji Polygon */}
-<div className="absolute top-0 right-0 translate-x-2 -translate-y-2 w-12 h-12">
-  <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-md">
-    <defs>
-      <clipPath id="pentagon-clip">
+              <div className="absolute top-0 right-0 translate-x-2 -translate-y-2 w-12 h-12">
+                <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-md">
+                  <defs>
+                    <clipPath id="pentagon-clip">
+                      <path d="M0,0 L100,0 L100,60 L50,100 L0,60 Z" />
+                    </clipPath>
+                  </defs>
 
-        <path d="M0,0 L100,0 L100,60 L50,100 L0,60 Z" />
-      </clipPath>
-    </defs>
-
-    <rect
-      width="100"
-      height="100"
-      fill="white"
-      clipPath="url(#pentagon-clip)"
-      rx="8"
-      ry="8"
-    />
-
-    <text
-      x="50"
-      y="55"
-      textAnchor="middle"
-      dominantBaseline="middle"
-      fontSize="36"
-    >
-      {style.emoji}
-    </text>
-  </svg>
-</div>
-
-
-
-
+                  <rect
+                    width="100"
+                    height="100"
+                    fill="white"
+                    clipPath="url(#pentagon-clip)"
+                    rx="8"
+                    ry="8"
+                  />
+                  <text
+                    x="50"
+                    y="55"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontSize="36"
+                  >
+                    {style.emoji}
+                  </text>
+                </svg>
+              </div>
 
               <div className="flex flex-col justify-between h-full">
                 <span className="text-sm font-semibold">{cat}</span>
@@ -94,8 +88,8 @@ export default function KursusPage({ groupedCourses }) {
         })}
       </div>
 
-      {/* Kursus List */}
-      <div className="space-y-16">
+      {/* Kursus List (pastikan KursusPerKategori punya hover shadow) */}
+      <div className="space-y-16 ">
         {categories
           .filter(cat => !activeCat || cat === activeCat)
           .map(cat => {

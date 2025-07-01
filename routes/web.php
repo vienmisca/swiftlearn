@@ -46,6 +46,8 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
     Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
     Route::get('/api/kursus', [KursusController::class, 'api']);
+    Route::get('/kursus-saya', [KursusController::class, 'kursusSaya'])->name('kursus-saya');
+
 
     // Kursus Saya - dummy data for now
     Route::get('/kursus-saya', function () {
