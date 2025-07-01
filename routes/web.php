@@ -93,6 +93,14 @@ Route::get('/kursus/detail-preview', function () {
     return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
 })->name('kursus.detail.preview');
 
+    // Sementara view statis blade sama tailwind saja 
+    Route::get('/materi/detail', function () {
+        return view('pages.kursus.materi-detail');
+    });
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Mentor Routes (Requires 'mentor' role)

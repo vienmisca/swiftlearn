@@ -10,6 +10,25 @@ export default {
     './resources/js/**/*.js',
     './resources/js/**/*.vue',
   ],
+  
+  safelist: [
+  'bg-green-500',
+  'bg-blue-500',
+  'bg-cyan-500',
+  'bg-pink-500',
+  'bg-orange-500',
+  'bg-purple-500',
+  'text-white',
+  'bg-gradient-to-r',
+  'from-green-400', 'to-green-600',
+  'from-blue-400', 'to-blue-600',
+  'from-cyan-400', 'to-teal-500',
+  'from-rose-500', 'to-pink-600',
+  'from-orange-500', 'to-amber-600',
+  'from-purple-500', 'to-indigo-600',
+  'text-white',
+],
+
 
   theme: {
     extend: {
@@ -24,6 +43,7 @@ export default {
         secondary: '#4A4ADE',
         navy: '#00095B',
       },
+      
     },
   },
 
