@@ -45,7 +45,7 @@
                         Tertarik <span class="underline decoration-purple-500">Belajar</span> apa hari ini?
                     </h2>
                     <p class=" font-dm font-semibold text-gray-500 mt-2">Telusuri lebih banyak materi yang kamu sukai!</p>
-                    <button class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">Cari Materi</button>
+                    <button  class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">Cari Materi</button>
                 </div>
 
                 <!-- Poster -->

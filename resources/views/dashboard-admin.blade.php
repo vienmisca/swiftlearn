@@ -9,9 +9,13 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
+  <style>
+  [x-cloak] { display: none; }
+  </style>
+
 </head>
-<body class="bg-blue-100 font-sans p-6">
+<body class="bg-blue-100 font-sans p-6" x-data="{ openDeleteModal: false, kursusToDelete: null }">
+
 
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-poppins font-bold text-navy tracking-tighter">Admin Dashboard</h1>
@@ -77,15 +81,16 @@
           <form method="GET" action="{{ route('dashboard.admin') }}" class="flex gap-2">
   <input
     type="text"
-    name="search"
-    value="{{ $search ?? '' }}"
-    placeholder="Search"
+    name="search_siswa"
+    value="{{ $searchSiswa ?? '' }}"
+    placeholder="Search Siswa"
     class="border px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
   >
   <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600">
-    Cari
+    Search
   </button>
 </form>
+
 
         </div>
         <div class="overflow-x-auto">
@@ -103,12 +108,15 @@
       <td class="px-4 py-2">{{ $siswa->name }}</td>
       <td class="px-4 py-2">{{ $siswa->email }}</td>
       <td class="px-4 py-2 text-right space-x-2">
-        <form action="{{ route('siswa.delete', $siswa->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus siswa ini?')">
-          @csrf
-          @method('DELETE')
-          <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm">🗑️</button>
-        </form>
-      </td>
+  <button
+  type="button"
+  @click="openDeleteModal = true; kursusToDelete = { id: {{ $siswa->id }}, nama_kursus: '{{ addslashes($siswa->name) }}', route: '{{ route('siswa.delete', $siswa->id) }}' }"
+  class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm"
+>
+  🗑️
+</button>
+</td>
+
     </tr>
   @empty
     <tr>
@@ -120,7 +128,8 @@
           </table>
         </div>
         <div class="mt-4">
-  {{ $siswaList->links() }}
+  {{ $siswaList->appends(['search_siswa' => $searchSiswa])->links() }}
+
 </div>
 
       </section>
@@ -129,7 +138,18 @@
       <section class="bg-white rounded-2xl shadow-md p-6">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-bold text-blue-900">List Kursus</h2>
-          <input type="text" placeholder="Search" class="border px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300">
+          <form method="GET" action="{{ route('dashboard.admin') }}" class="flex gap-2">
+  <input
+    type="text"
+    name="search_kursus"
+    value="{{ $searchKursus ?? '' }}"
+    placeholder="Search Kursus"
+    class="border px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
+  >
+  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600">
+    Search
+  </button>
+</form>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left">
@@ -142,29 +162,68 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="border-t hover:bg-gray-50">
-                <td class="px-4 py-2">Bagaimana Hukum Gravitasi Tercipta</td>
-                <td class="px-4 py-2">Fisika</td>
-                <td class="px-4 py-2">Jhoes</td>
-                <td class="px-4 py-2 text-right space-x-2">
-                  <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-xl text-sm">✓ Setujui</button>
-                  <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm">🗑️</button>
-                </td>
-              </tr>
-              <!-- Tambahkan baris sesuai data -->
-            </tbody>
+  @forelse ($kursusList as $kursus)
+    <tr class="border-t hover:bg-gray-50">
+      <td class="px-4 py-2">{{ $kursus->nama_kursus }}</td>
+      <td class="px-4 py-2">{{ $kursus->kategori }}</td>
+      <td class="px-4 py-2">{{ $kursus->mentor->name ?? '-' }}</td>
+      <td class="px-4 py-2 text-right">
+        <button
+  type="button"
+  @click="openDeleteModal = true; kursusToDelete = { id: {{ $kursus->id }}, nama_kursus: '{{ addslashes($kursus->nama_kursus) }}' }"
+  class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm"
+>
+  🗑️
+</button>
+
+      </td>
+    </tr>
+  @empty
+    <tr>
+      <td colspan="4" class="px-4 py-2 text-center text-gray-500">Tidak ada kursus ditemukan.</td>
+    </tr>
+  @endforelse
+</tbody>
+
           </table>
         </div>
-        <div class="flex justify-center mt-4 space-x-2 text-blue-900">
-          <button>‹</button>
-          <button class="font-bold">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>›</button>
-        </div>
+        <div class="mt-4">
+  {{ $kursusList->appends(['search_kursus' => $searchKursus])->links() }}
+</div>
+
       </section>
 
     </main>
   </div>
+
+  <!-- Modal Konfirmasi Hapus -->
+<div x-show="openDeleteModal"
+     x-transition
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div @click.outside="openDeleteModal = false"
+       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Hapus</h2>
+    <p class="mb-6 text-gray-700">
+      Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?
+    </p>
+
+    <form method="POST" :action="'/admin/kursus/' + kursusToDelete.id">
+      @csrf
+      @method('DELETE')
+      <div class="flex justify-center gap-4">
+        <button type="button"
+                @click="openDeleteModal = false"
+                class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
+          Batal
+        </button>
+        <button type="submit"
+                class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
+          Hapus
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>

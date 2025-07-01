@@ -7,11 +7,16 @@
   @vite(['resources/css/app.css', 'resources/js/app.jsx'])
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
+  <style>
+  [x-cloak] { display: none; }
+  </style>
+  
+
 </head>
-<body x-data="{ openModal: false, selected: {} }">
- <div class="min-h-screen py-10 px-8 bg-cover bg-center"
+<body x-data="{ openEditModal: false, kursusToEdit: null, openDeleteModal: false, kursusToDelete: null }">
+<div class="min-h-screen py-10 px-8 bg-cover bg-center"
      style="background-image: url('{{ asset('images/bg-mentor.png') }}');">
+
 
 <!-- Judul dan Navbar -->
 <div class="flex justify-between items-center mb-6">
@@ -84,7 +89,7 @@
     <main class="lg:col-span-6 bg-white rounded-2xl shadow-md p-6">
       <h2 class="text-2xl font-poppins font-bold text-blue-900 mb-4">Kursus Anda</h2>
       <div class="font-dm space-y-4">
-  @forelse ($kursusList as $kursus)
+ @forelse ($kursusList as $kursus)
   <div class="bg-gray-100 p-4 rounded-xl shadow-sm flex justify-between items-center">
     <div>
       <p class="font-bold text-blue-900">{{ $kursus->nama_kursus }}</p>
@@ -96,20 +101,21 @@
          Buat Materi
       </a>
 
-      <form method="POST" action="{{ route('mentor.kursus.destroy', $kursus->id) }}"
-            onsubmit="return confirm('Yakin ingin menghapus kursus ini?');">
-        @csrf
-        @method('DELETE')
-        <button type="submit"
-                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
-          Hapus
-        </button>
-        
-        <!-- Edit Button -->
-<button @click="openModal = true; selected = {{ $kursus->toJson() }}"
-        class="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
-  Edit
+      <!-- Edit & Delete Buttons -->
+<div class="flex items-center gap-2">
+  <!-- Edit Button -->
+  <button @click="openEditModal = true; kursusToEdit = {{ $kursus->toJson() }}"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
+    Edit
+  </button>
+
+  <!-- Hapus Button -->
+  <button @click="openDeleteModal = true; kursusToDelete = {{ $kursus->toJson() }}"
+        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
+  Hapus
 </button>
+
+</div>
 
 
       </form>
@@ -118,6 +124,15 @@
 @empty
   <p class="text-gray-600">Belum ada kursus.</p>
 @endforelse
+@if ($errors->any())
+    <div class="text-red-500">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 </div>
       {{-- <div class="text-right mt-6">
@@ -126,7 +141,6 @@
         </button>
       </div> --}}
     </main>
-    
 
     <!-- Upload + Rating -->
     <aside class="lg:col-span-4 flex flex-col space-y-6">
@@ -160,7 +174,7 @@
     <!-- Kategori + Submit -->
     
     <div class="flex flex-col md:flex-row gap-4 items-center">
-      <select name="kategori" class="flex-1 px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white" req>
+      <select name="kategori" class="flex-1 px-4 py-2 rounded-xl border focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white" required>
           <option value="">Pilih Kategori</option>
           <option value="Fisika">Fisika</option>
           <option value="Matematika">Matematika</option>
@@ -189,11 +203,90 @@
         </div>
       </div>
     </aside>
-
-
-
-
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+ <div x-show="openEditModal"
+
+       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div @click.outside="openEditModal = false"
+         class="bg-white w-full max-w-xl p-6 rounded-xl shadow-lg">
+      <h2 class="text-xl font-bold text-blue-900 mb-4">Edit Kursus</h2>
+
+      <form :action="'/mentor/kursus/' + kursusToEdit.id" method="POST" enctype="multipart/form-data">
+
+    @csrf
+    @method('PUT')
+
+        <!-- Nama Kursus -->
+        <input type="text" name="nama_kursus" x-model="kursusToEdit.nama_kursus"
+               class="w-full mb-4 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
+               placeholder="Nama Kursus" required>
+
+        <!-- Deskripsi -->
+        <textarea name="deskripsi" x-model="kursusToEdit.deskripsi"
+                  class="w-full mb-4 px-4 py-2 border rounded-xl h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  placeholder="Deskripsi Kursus" required></textarea>
+
+        <!-- Kategori -->
+        <select name="kategori" x-model="kursusToEdit.kategori"
+                class="w-full mb-4 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white" required>
+          <option value="">Pilih Kategori</option>
+          <option value="Fisika">Fisika</option>
+          <option value="Matematika">Matematika</option>
+          <option value="IPA">IPA</option>
+          <option value="Bahasa">Bahasa</option>
+          <option value="Kimia">Kimia</option>
+          <option value="Informatika">Informatika</option>
+        </select>
+
+        <!-- Sampul Kursus -->
+        <label class="block mb-4 text-sm text-gray-600">Ganti Sampul (Opsional)</label>
+        <input type="file" name="sampul_kursus"
+               class="w-full mb-4 px-4 py-2 border rounded-xl bg-white">
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-2">
+          <button type="button"
+                  @click="openEditModal = false"
+                  class="bg-gray-400 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
+            Batal
+          </button>
+          <button type="submit"
+                  class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm font-semibold shadow">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Konfirmasi Hapus -->
+<div x-show="openDeleteModal"
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div @click.outside="openDeleteModal = false"
+       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Hapus</h2>
+    <p class="mb-6 text-gray-700">Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?</p>
+
+    <form method="POST" :action="'/mentor/kursus/' + kursusToDelete.id">
+      @csrf
+      @method('DELETE')
+      <div class="flex justify-center gap-4">
+        <button type="button"
+                @click="openDeleteModal = false"
+                class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
+          Batal
+        </button>
+        <button type="submit"
+                class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
+          Hapus
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>
