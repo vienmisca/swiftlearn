@@ -8,7 +8,6 @@
   @vite(['resources/css/app.css', 'resources/js/app.jsx'])
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
 <body style="background-image: url('{{ asset('images/page.png') }}');" class="bg-cover bg-center min-h-screen">
@@ -46,7 +45,7 @@
   </div> --}}
 
   <!-- React Mount Point -->
-  <div id="kursus-page" data-grouped-courses='@json($groupedCourses)'></div>
+  <div id="kursus-page" class="mt-10 font-poppins" data-grouped-courses='@json($groupedCourses)'></div>
 
 </div>
 
