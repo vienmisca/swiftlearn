@@ -63,13 +63,7 @@
                  class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
 
         </div>
-
-
-        <div class="flex gap-4 mb-4">
-          <input type="text" name="judul" placeholder="Judul Materi"
-                 class="flex-1 p-3 rounded-lg bg-gray-100 placeholder-gray-400" />
-
-        </div>
+        
 
         <textarea name="deskripsi" rows="4" placeholder="Deskripsi Materi"
                   class="w-full p-3 rounded-lg bg-gray-100 placeholder-gray-400 mb-4"></textarea>
