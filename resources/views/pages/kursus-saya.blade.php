@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="min-h-screen py-10 px-8 bg-cover bg-center"
+    <div class="min-h-screen py-10 px-8 bg-cover bg-fixed bg-center"
      style="background-image: url('{{ asset('images/page.png') }}');">
 
         <!-- Navbar -->

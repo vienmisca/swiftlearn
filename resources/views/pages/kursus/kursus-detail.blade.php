@@ -10,33 +10,51 @@
     body { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
-<body class="min-h-screen bg-[#d6eeff]">
+<body class="min-h-screen bg-[#d6eeff] overflow-x-hidden">
 
   {{-- Header --}}
-  <div class="relative bg-gradient-to-r from-[#5b5ef2] to-[#184fc2] p-6 md:p-10 rounded-b-[40px] text-white shadow-md">
+<div class="relative bg-gradient-to-r from-[#5b5ef2] to-[#184fc2] p-6 md:p-10 rounded-b-[40px] text-white shadow-md">
 
-    {{-- Tombol Kembali --}}
-    <a href="{{ route('kursus.index') }}" class="absolute top-4 left-4 bg-white/20 hover:bg-white/30 transition text-white font-bold px-3 py-1.5 rounded-full">
-      ←
-    </a>
+  {{-- Tombol Kembali --}}
+  <a href="javascript:history.back()" 
+     class="absolute top-4 left-4 bg-white/20 hover:bg-white/30 transition text-white font-bold px-3 py-1.5 rounded-full">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </a>
 
-    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mt-6">
-      {{-- Kiri: Gambar dan Info --}}
-      <div class="flex items-center gap-4">
-        <img
-          src="{{ $kursus->sampul_kursus ? asset('storage/' . $kursus->sampul_kursus) : asset('images/default-thumbnail.jpg') }}"
-          alt="thumbnail"
-          class="w-40 h-28 rounded-xl object-cover border-4 border-white shadow"
-        />
-        <div>
-          <h2 class="text-2xl md:text-3xl font-bold leading-snug">
-            {{ $kursus->nama_kursus ?? 'Judul Kursus Tidak Ditemukan' }}
-          </h2>
-          <p class="text-sm mt-2 font-medium">Oleh: {{ $kursus->mentor->name ?? 'Mentor Tidak Diketahui' }}</p>
-        </div>
+  <div class="flex flex-col md:flex-row justify-between items-center gap-6 mt-6 relative">
+
+    <img src="{{ asset('images/cos-flowers.png') }}" 
+         alt="decorative flowers" 
+         class="absolute top-[-200px] left-[-100px] w-[400px] h-auto z-0 pointer-events-none" />
+
+    <img src="{{ asset('images/cos-stars.png') }}" 
+         alt="decorative stars" 
+         class="absolute top-[-200px] right-[-100px] w-[400px] h-auto z-0 pointer-events-none" />
+
+    <div class="flex items-center gap-4 relative z-10">
+
+      <img
+        src="{{ $kursus->sampul_kursus ? asset('storage/' . $kursus->sampul_kursus) : asset('images/default-thumbnail.jpg') }}"
+        alt="thumbnail"
+        class="w-40 h-28 rounded-xl object-cover border-4 border-white shadow z-10 relative"
+      />
+
+      {{-- Info --}}
+      <div class="z-10 relative">
+        <h2 class="text-2xl md:text-3xl font-bold leading-snug">
+          {{ $kursus->nama_kursus ?? 'Judul Kursus Tidak Ditemukan' }}
+        </h2>
+        <p class="text-sm mt-2 font-medium">
+          Oleh: {{ $kursus->mentor->name ?? 'Mentor Tidak Diketahui' }}
+        </p>
       </div>
     </div>
+
   </div>
+</div>
+
 
   {{-- Daftar Materi --}}
   <div class="px-6 py-10 max-w-5xl mx-auto">

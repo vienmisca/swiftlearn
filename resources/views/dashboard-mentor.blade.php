@@ -262,30 +262,48 @@
 
 <!-- Modal Konfirmasi Hapus -->
 <div x-show="openDeleteModal"
-     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+     x-transition:enter="transition-opacity ease-out duration-200"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition-opacity ease-in duration-150"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0">
+
+  <!-- Kontainer Modal -->
   <div @click.outside="openDeleteModal = false"
-       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center">
+       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center transform transition-all duration-300 ease-out"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0 scale-75"
+       x-transition:enter-end="opacity-100 scale-100"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="opacity-100 scale-100"
+       x-transition:leave-end="opacity-0 scale-75">
+
     <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Hapus</h2>
-    <p class="mb-6 text-gray-700">Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?</p>
+    <p class="mb-6 text-gray-700">
+      Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?
+    </p>
 
     <form method="POST" x-bind:action="'/mentor/kursus/' + kursusToDelete.id">
-    @csrf
-    @method('DELETE')
-    <div class="flex justify-center gap-4">
+      @csrf
+      @method('DELETE')
+      <div class="flex justify-center gap-4">
         <button type="button"
                 @click="openDeleteModal = false"
                 class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
-            Batal
+          Batal
         </button>
         <button type="submit"
                 class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
-            Hapus
+          Hapus
         </button>
-    </div>
-</form>
+      </div>
+    </form>
 
   </div>
 </div>
+
 
 </body>
 </html>

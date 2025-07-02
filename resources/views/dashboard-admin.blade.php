@@ -14,7 +14,12 @@
   </style>
 
 </head>
-<body class="bg-blue-100 font-sans p-6" x-data="{ openDeleteModal: false, kursusToDelete: null }">
+<body 
+  class="bg-blue-100 font-sans p-6"  
+  x-data="{ openDeleteModal: false, kursusToDelete: null }"
+  style="background-image: url('{{ asset('images/background-admin.png') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;"
+>
+
 
 
   <div class="flex justify-between items-center mb-6">
