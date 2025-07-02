@@ -38,15 +38,25 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-10">
             <!-- Left Column -->
             <div class="lg:col-span-3 space-y-6">
-                <!-- Greeting Card -->  
-                <div class="bg-white rounded-2xl shadow p-6">
+                <!-- Greeting Card -->
+                <div class="bg-white rounded-2xl shadow p-6 relative overflow-hidden">
                     <h2 class="text-3xl font-dm font-bold text-navy tracking-tighter">
                         Halo {{ auth()->user()->name ?? 'Pelajar' }}!<br>
                         Tertarik <span class="underline decoration-purple-500">Belajar</span> apa hari ini?
                     </h2>
-                    <p class=" font-dm font-semibold text-gray-500 mt-2">Telusuri lebih banyak materi yang kamu sukai!</p>
-                    <button  class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">Cari Materi</button>
+                    <p class="font-dm font-semibold text-gray-500 mt-2">
+                        Telusuri lebih banyak materi yang kamu sukai!
+                    </p>
+                    <button class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+                        <a href="{{ route('kursus.index') }}">Cari Materi</a> 
+                    </button>
+
+                    <!-- Glove Image Dekoratif -->
+                    <img src="{{ asset('images/cos-glove.png') }}" 
+                        alt="Hand pointer" 
+                        class="absolute top-10 right-10 w-32 rotate-[-10deg] pointer-events-none" />
                 </div>
+
 
                 <!-- Poster -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

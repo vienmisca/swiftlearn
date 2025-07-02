@@ -32,6 +32,7 @@ export default {
 
   theme: {
     extend: {
+      
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
         dm: ['"DM Sans"', 'sans-serif'],
@@ -42,6 +43,18 @@ export default {
         primary: '#5C5CFF',
         secondary: '#4A4ADE',
         navy: '#00095B',
+      },
+       width: {
+        '36': '9rem',     // 144px
+        '44': '11rem',    // 176px
+        '52': '13rem',    // 208px
+        '60': '15rem',    // 240px
+        '68': '17rem',    // 272px
+        '76': '19rem',    // 304px
+        '84': '21rem',    // 336px
+        '92': '23rem',    // 368px
+        '100': '25rem',   // 400px
+        '108': '27rem'    // 432px
       },
       
     },

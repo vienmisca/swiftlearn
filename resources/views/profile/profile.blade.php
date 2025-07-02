@@ -17,7 +17,7 @@
 <body class="bg-blue-100">
 
     <!-- Profil Header -->
-    <div class="relative h-[280px] bg-gradient-to-r from-blue-700 to-blue-500 text-white p-10 overflow-hidden">
+    <div class="relative h-[280px] bg-gradient-to-r from-blue-500 to-blue-700 text-white p-10 overflow-hidden">
 
 
     <!-- Decorative SVG (optional) -->
@@ -25,7 +25,8 @@
         <!-- Add decorative SVG shapes if needed -->
     </div>
 
-    <!-- Back Button -->
+
+    <!-- Tombol Back -->
     <a href="{{ route('home') }}" class="absolute top-6 left-6 z-10">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white hover:text-yellow-300 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -34,30 +35,38 @@
 
     <!-- Profile Content -->
     <div class="flex mt-10 pl-4 items-start gap-6 relative z-10">
-
         <!-- Avatar -->
-        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : '/images/avatar.png' }}" class="h-24 w-24 rounded-full border-4 border-white shadow-lg" />
-
+        <img src="{{ $user->photo ? asset('storage/' . $user->photo) : '/images/avatar.png' }}" 
+             class="h-24 w-24 rounded-full border-4 border-white shadow-lg" />
 
         <!-- Info -->
         <div>
-            <h2 class="text-3xl font-dm font-bold">{{ auth()->user()->name ?? 'Guest' }}</h2>
+            <h2 class="text-3xl font-dm font-bold text-white">{{ auth()->user()->name ?? 'Guest' }}</h2>
             <p class="text-white/80 text-sm">{{ auth()->user()->email ?? 'email@example.com' }}</p>
+
             <div class="flex items-center space-x-2 mt-1">
                 <span class="text-yellow-400 font-bold text-lg">Lvl 3</span>
                 <span class="text-xl">🌼 🌼</span>
             </div>
-            <p class="mt-4 text-dm leading-relaxed max-w-xl">{{ auth()->user()->about ?? 'Belum ada deskripsi' }}</p>
+
+            <p class="mt-4 text-white leading-relaxed max-w-xl">
+                {{ auth()->user()->about ?? 'Belum ada deskripsi' }}
+            </p>
         </div>
 
         <!-- Edit Profile Button -->
-<div class="ml-auto">
-    <a href="{{ route('profile.edit') }}" class="bg-white text-blue-700 font-semibold px-6 py-2 rounded-full shadow hover:bg-blue-100 transition">
-        Edit Profile
-    </a>
-</div>
-
+        <div class="ml-auto">
+            <a href="{{ route('profile.edit') }}" 
+               class="bg-white text-blue-700 font-semibold px-6 py-2 rounded-full shadow hover:bg-blue-100 transition">
+                Edit Profile
+            </a>
+        </div>
     </div>
+
+    <!-- Gambar Dekoratif di Kanan Atas -->
+    <img src="{{ asset('images/cos.png') }}" 
+         alt="decorative eyes" 
+         class="absolute top-[-120px] right-[-80px] w-[550px] h-auto z-0 pointer-events-none" />
 </div>
 
 
@@ -65,7 +74,7 @@
     <div class="max-w-5xl mx-auto py-12 px-6">
 
         <!-- Materi yang diminati -->
-        <div class="mb-10 text-center"">
+        <div class="mb-10 text-center">
     <h3 class="text-lg font-dm font-semibold mb-4 text-navy">Materi yang diminati:</h3>
     <div class="flex justify-center gap-4 flex-wrap">
         @forelse ((array) $user->interests as $materi)

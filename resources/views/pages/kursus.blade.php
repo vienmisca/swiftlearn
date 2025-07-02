@@ -10,7 +10,7 @@
   <style>
   </style>
 </head>
-<body style="background-image: url('{{ asset('images/page.png') }}');" class="bg-cover bg-center min-h-screen">
+<body style="background-image: url('{{ asset('images/page.png') }}');" class="bg-cover bg-center bg-fixed min-h-screen overflow-x-hidden">
 
 <div class="py-10 px-8">
 
