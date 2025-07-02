@@ -105,7 +105,7 @@
 <div class="flex items-center gap-2">
   <!-- Edit Button -->
   <button @click="openEditModal = true; kursusToEdit = {{ $kursus->toJson() }}"
-          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
+          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
     Edit
   </button>
 
@@ -195,7 +195,7 @@
 
 
       <!-- Rating -->
-      <div class="bg-white rounded-2xl p-6 shadow-md">
+      {{-- <div class="bg-white rounded-2xl p-6 shadow-md">
         <h2 class="text-xl font-bold text-blue-900 mb-2">Rating Anda</h2>
         <div class="flex items-center space-x-1 text-yellow-400 text-2xl">
           <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -203,7 +203,7 @@
         </div>
       </div>
     </aside>
-  </div>
+  </div> --}}
 
  <div x-show="openEditModal"
 
@@ -212,11 +212,9 @@
          class="bg-white w-full max-w-xl p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold text-blue-900 mb-4">Edit Kursus</h2>
 
-      <form :action="'/mentor/kursus/' + kursusToEdit.id" method="POST" enctype="multipart/form-data">
-
-    @csrf
-    @method('PUT')
-
+      <form :action="`{{ url('/mentor/kursus') }}/${kursusToEdit.id}`" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
         <!-- Nama Kursus -->
         <input type="text" name="nama_kursus" x-model="kursusToEdit.nama_kursus"
                class="w-full mb-4 px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -270,21 +268,22 @@
     <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Hapus</h2>
     <p class="mb-6 text-gray-700">Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?</p>
 
-    <form method="POST" :action="'/mentor/kursus/' + kursusToDelete.id">
-      @csrf
-      @method('DELETE')
-      <div class="flex justify-center gap-4">
+    <form method="POST" x-bind:action="'/mentor/kursus/' + kursusToDelete.id">
+    @csrf
+    @method('DELETE')
+    <div class="flex justify-center gap-4">
         <button type="button"
                 @click="openDeleteModal = false"
                 class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
-          Batal
+            Batal
         </button>
         <button type="submit"
                 class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
-          Hapus
+            Hapus
         </button>
-      </div>
-    </form>
+    </div>
+</form>
+
   </div>
 </div>
 

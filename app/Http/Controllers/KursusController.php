@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Kursus;
+use App\Models\Materi;
 use Illuminate\Http\Request;
 
 class KursusController extends Controller
