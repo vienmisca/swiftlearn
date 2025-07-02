@@ -88,7 +88,9 @@ class MateriController extends Controller
         $materi->deskripsi = $request->deskripsi;
         $materi->save();
 
-        return redirect()->route('mentor.kursus.history')->with('success', 'Materi updated!');
+        return redirect()->route('mentor.kursus.upload.materi', ['kursus' => $materi->kursus_id])
+    ->with('success', 'Materi berhasil diperbarui.');
+
     }
 
     // Delete a materi
@@ -111,4 +113,10 @@ class MateriController extends Controller
 
         return redirect()->back()->with('success', 'Materi berhasil dihapus.');
     }
+    public function show($id)
+    {
+        $materi = Materi::with(['kursus', 'kursus.mentor'])->findOrFail($id);
+        return view('pages.kursus.materi-detail', compact('materi'));
+    }
+
 }

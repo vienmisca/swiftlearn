@@ -58,7 +58,7 @@
 
         <div class="space-y-4">
     @forelse($courses as $course)
-    <div class="flex justify-between items-center bg-gray-100 rounded-2xl px-6 py-5 shadow-sm font-dm">
+    <a href="#" class="flex justify-between items-center bg-gray-100 rounded-2xl px-6 py-5 shadow-sm font-dm">
         <div>
             <h2 class="font-bold text-blue-900">{{ $course->nama_kursus }}</h2>
             <p class="text-sm text-gray-500 mt-1">
@@ -71,7 +71,7 @@
             </p>
             <i data-lucide="more-vertical" class="w-5 h-5 text-gray-500 cursor-pointer"></i>
         </div>
-    </div>
+    </a>
     @empty
     <p class="text-center text-gray-500">Belum ada kursus.</p>
     @endforelse

@@ -35,19 +35,6 @@
           <p class="text-sm mt-2 font-medium">Oleh: {{ $kursus->mentor->name ?? 'Mentor Tidak Diketahui' }}</p>
         </div>
       </div>
-
-      {{-- Kanan: Rating --}}
-      <div class="bg-white text-yellow-500 px-5 py-2 rounded-full shadow flex items-center space-x-2">
-        <span class="text-[#184fc2] font-semibold">Beri Rating:</span>
-        <div class="flex items-center gap-1">
-          @for ($i = 0; $i < 5; $i++)
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 .587l3.668 7.568L24 9.748l-6 5.84 1.416 8.31L12 18.896l-7.416 5.002L6 15.588 0 9.748l8.332-1.593z"/>
-            </svg>
-          @endfor
-          <span class="text-black font-semibold ml-1">5.0</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -56,15 +43,18 @@
     <h3 class="text-lg font-bold text-[#0B0B7C] mb-6">Daftar Materi</h3>
 
     @if ($kursus->materis->count())
-      <div class="space-y-4">
+      <div href="#" class="space-y-4">
         @foreach($kursus->materis as $materi)
-          <div class="bg-white px-6 py-4 rounded-2xl shadow border border-blue-100 flex items-center gap-3 hover:shadow-md transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.828a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 0 13.172 2H6zm7 1.414L19.586 10H14a1 1 0 0 1-1-1V3.414z"/>
-            </svg>
-            <span class="font-medium text-[#1e2a4f]">{{ $materi->judul }}</span>
-          </div>
-        @endforeach
+  <a href="{{ route('materi.show', $materi->id) }}" class="block">
+    <div class="bg-white px-6 py-4 rounded-2xl shadow border border-blue-100 flex items-center gap-3 hover:shadow-md transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.828a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 0 13.172 2H6zm7 1.414L19.586 10H14a1 1 0 0 1-1-1V3.414z"/>
+      </svg>
+      <span class="font-medium text-[#1e2a4f]">{{ $materi->judul }}</span>
+    </div>
+  </a>
+@endforeach
+
       </div>
     @else
       <p class="text-gray-600 italic">Belum ada materi yang tersedia.</p>

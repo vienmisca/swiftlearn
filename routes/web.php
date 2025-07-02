@@ -18,7 +18,7 @@ use App\Http\Controllers\KursusHistoryController;
 | Public Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', fn () => view('pages.welcome'))->name('welcome');
+Route::get('/', fn () => view('auth.login'))->name('login');
 
 Route::get('/register', [SiswaRegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [SiswaRegisterController::class, 'register'])->name('register.store');
@@ -47,58 +47,32 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
     Route::get('/api/kursus', [KursusController::class, 'api']);
     Route::get('/kursus-saya', [KursusController::class, 'kursusSaya'])->name('kursus-saya');
-
-
-    // Kursus Saya - dummy data for now
-    Route::get('/kursus-saya', function () {
-        $historyCourses = [
-            (object)[
-                'title' => 'Kelas Gravitasi : belajar Tentang Gravitasi',
-                'thumbnail_url' => '/images/gravitasi.jpg',
-                'category_name' => 'Fisika',
-            ],
-            (object)[
-                'title' => 'Belajar Tentang CSS dan HTML',
-                'thumbnail_url' => '/images/css_html.jpg',
-                'category_name' => 'Informatika',
-            ],
-            (object)[
-                'title' => 'Belajar Dasar Python',
-                'thumbnail_url' => '/images/python.jpg',
-                'category_name' => 'Informatika',
-            ],
-            (object)[
-                'title' => 'Hukum Newton',
-                'thumbnail_url' => '/images/newton.jpg',
-                'category_name' => 'Fisika',
-            ],
-        ];
-        return view('pages.kursus-saya', compact('historyCourses'));
-    })->name('kursus-saya');
+    Route::get('/materi/{id}', [MateriController::class, 'show'])->name('materi.show');
+    
 });
 
-// Preview detail kursus (UI only)
-Route::get('/kursus/detail-preview', function () {
-    $kursus = (object)[
-        'judul' => 'Teori Relativitas Umum Einstein: Gravitasi dan Benda Langit',
-        'sampul_kursus' => '/images/earth-thumbnail.jpg',
-        'mentor' => (object)['name' => 'Jhoes'],
-        'rating' => 5.0,
-    ];
-    $materis = [
-        (object)['judul' => 'Belajar tentang apa itu Gravitasi'],
-        (object)['judul' => 'Hukum Gravitasi Newton'],
-        (object)['judul' => 'Gravitasi dalam Skala Sehari hari'],
-        (object)['judul' => 'Gravitasi di Luar angkasa'],
-        (object)['judul' => 'Teori Relativitas Dan Gravitasi'],
-    ];
-    return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
-})->name('kursus.detail.preview');
+// // Preview detail kursus (UI only)
+// Route::get('/kursus/detail-preview', function () {
+//     $kursus = (object)[
+//         'judul' => 'Teori Relativitas Umum Einstein: Gravitasi dan Benda Langit',
+//         'sampul_kursus' => '/images/earth-thumbnail.jpg',
+//         'mentor' => (object)['name' => 'Jhoes'],
+//         'rating' => 5.0,
+//     ];
+//     $materis = [
+//         (object)['judul' => 'Belajar tentang apa itu Gravitasi'],
+//         (object)['judul' => 'Hukum Gravitasi Newton'],
+//         (object)['judul' => 'Gravitasi dalam Skala Sehari hari'],
+//         (object)['judul' => 'Gravitasi di Luar angkasa'],
+//         (object)['judul' => 'Teori Relativitas Dan Gravitasi'],
+//     ];
+//     return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
+// })->name('kursus.detail.preview');
 
-    // Sementara view statis blade sama tailwind saja 
-    Route::get('/materi/detail', function () {
-        return view('pages.kursus.materi-detail');
-    });
+//     // Sementara view statis blade sama tailwind saja 
+//     Route::get('/materi/detail', function () {
+//         return view('pages.kursus.materi-detail');
+//     });
 
 
 
@@ -117,10 +91,16 @@ Route::middleware(['auth', 'mentor'])->group(function () {
     Route::post('/mentor/materi/store', [MateriController::class, 'store'])->name('mentor.materi.store');
     Route::get('/mentor/materi/{id}/edit', [MateriController::class, 'edit'])->name('mentor.edit.materi');
     Route::get('/mentor/materi/{id}/delete', [MateriController::class, 'delete'])->name('mentor.delete.materi');
-    Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
+    // Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
     Route::delete('/mentor/materi/{id}', [MateriController::class, 'destroy'])->name('mentor.materi.delete');
     Route::post('/mentor/kursus/store', [MentorController::class, 'store'])->name('mentor.kursus.store');
-    Route::put('/mentor/kursus/{id}/update', [MentorController::class, 'update'])->name('mentor.kursus.update');
+    // Route::put('/mentor/kursus/{id}/update', [MentorController::class, 'update'])->name('mentor.kursus.update');
+    Route::put('/mentor/kursus/{id}', [MentorController::class, 'update'])->name('mentor.kursus.update');
+    // Route::put('/mentor/materi/{id}', [MateriController::class, 'updateMateri'])->name('mentor.update.materi');
+    Route::put('/mentor/materi/{id}', [MateriController::class, 'update'])->name('mentor.update.materi');
+
+
+    
 
 
 
@@ -151,10 +131,14 @@ Route::middleware(['auth'])->group(function () {
 
 // Logout for siswa
 Route::post('/logout', function () {
+    $redirect = match (auth()->user()->role) {
+        'admin', 'mentor' => '/admin-mentor/login',
+        default => '/login',
+    };
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
-    return redirect('/admin-mentor/login');
+    return redirect($redirect);
 })->name('logout');
 
 /*
