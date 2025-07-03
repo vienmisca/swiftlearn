@@ -48,7 +48,7 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/api/kursus', [KursusController::class, 'api']);
     Route::get('/kursus-saya', [KursusController::class, 'kursusSaya'])->name('kursus-saya');
     Route::get('/materi/{id}', [MateriController::class, 'show'])->name('materi.show');
-    
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 });
 
 // // Preview detail kursus (UI only)
