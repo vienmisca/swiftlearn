@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Kursus;
 use App\Models\Materi;
 use Illuminate\Http\Request;
-
+use App\Models\Home;
 class KursusController extends Controller
 {
         public function index()

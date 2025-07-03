@@ -16,7 +16,12 @@
 </head>
 <body 
   class="bg-blue-100 font-sans p-6"  
-  x-data="{ openDeleteModal: false, kursusToDelete: null }"
+  x-data="{
+    openDeleteSiswaModal: false,
+    siswaToDelete: null,
+    openDeleteKursusModal: false,
+    kursusToDelete: null
+  }"
   style="background-image: url('{{ asset('images/background-admin.png') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;"
 >
 
@@ -115,11 +120,12 @@
       <td class="px-4 py-2 text-right space-x-2">
   <button
   type="button"
-  @click="openDeleteModal = true; kursusToDelete = { id: {{ $siswa->id }}, nama_kursus: '{{ addslashes($siswa->name) }}', route: '{{ route('siswa.delete', $siswa->id) }}' }"
+  @click="openDeleteSiswaModal = true; siswaToDelete = { id: {{ $siswa->id }}, name: '{{ addslashes($siswa->name) }}' }"
   class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm"
 >
   🗑️
 </button>
+
 </td>
 
     </tr>
@@ -175,11 +181,12 @@
       <td class="px-4 py-2 text-right">
         <button
   type="button"
-  @click="openDeleteModal = true; kursusToDelete = { id: {{ $kursus->id }}, nama_kursus: '{{ addslashes($kursus->nama_kursus) }}' }"
+  @click="openDeleteKursusModal = true; kursusToDelete = { id: {{ $kursus->id }}, nama_kursus: '{{ addslashes($kursus->nama_kursus) }}' }"
   class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-xl text-sm"
 >
   🗑️
 </button>
+
 
       </td>
     </tr>
@@ -201,23 +208,23 @@
     </main>
   </div>
 
-  <!-- Modal Konfirmasi Hapus -->
-<div x-show="openDeleteModal"
+  
+<div x-show="openDeleteSiswaModal"
      x-transition
      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-  <div @click.outside="openDeleteModal = false"
+  <div @click.outside="openDeleteSiswaModal = false"
        class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center">
     <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Hapus</h2>
     <p class="mb-6 text-gray-700">
-      Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?
+      Yakin ingin menghapus siswa <span class="font-semibold" x-text="siswaToDelete?.name"></span>?
     </p>
 
-    <form method="POST" :action="'/admin/kursus/' + kursusToDelete.id">
+    <form method="POST" :action="'/admin/siswa/' + siswaToDelete.id">
       @csrf
       @method('DELETE')
       <div class="flex justify-center gap-4">
         <button type="button"
-                @click="openDeleteModal = false"
+                @click="openDeleteSiswaModal = false"
                 class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
           Batal
         </button>
@@ -229,6 +236,37 @@
     </form>
   </div>
 </div>
+
+
+  <!-- Modal Konfirmasi Hapus -->
+<div x-show="openDeleteKursusModal"
+     x-transition
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div @click.outside="openDeleteKursusModal = false"
+       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Hapus</h2>
+    <p class="mb-6 text-gray-700">
+      Yakin ingin menghapus kursus <span class="font-semibold" x-text="kursusToDelete?.nama_kursus"></span>?
+    </p>
+
+    <form method="POST" :action="'/admin/kursus/' + kursusToDelete.id">
+      @csrf
+      @method('DELETE')
+      <div class="flex justify-center gap-4">
+        <button type="button"
+                @click="openDeleteKursusModal = false"
+                class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
+          Batal
+        </button>
+        <button type="submit"
+                class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
+          Hapus
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 </body>
 </html>

@@ -89,27 +89,21 @@
             </div>
 
             <!-- Kursus Hari Ini -->
-            <div class="bg-white rounded-2xl shadow p-6 font-dm font-semibold">
-                <h3 class="text-2xl font-bold mb-4 text-navy">Kursus Hari Ini</h3>
-                <ul class="space-y-4">
-                    <li class="border rounded-xl p-3">
-                        <p class="font-semibold">Kelas Gravitasi: Belajar Tentang Gravitasi</p>
-                        <p class="text-sm text-gray-500">Kursus: Fisika</p>
-                    </li>
-                    <li class="border rounded-xl p-3">
-                        <p class="font-semibold">Hukum Kekekalan</p>
-                        <p class="text-sm text-gray-500">Kursus: Fisika</p>
-                    </li>
-                    <li class="border rounded-xl p-3">
-                        <p class="font-semibold">Hukum Newton</p>
-                        <p class="text-sm text-gray-500">Kursus: Fisika</p>
-                    </li>
-                    <li class="border rounded-xl p-3">
-                        <p class="font-semibold">Gerak Parabola</p>
-                        <p class="text-sm text-gray-500">Kursus: Fisika</p>
-                    </li>
-                </ul>
-            </div>
+<div class="bg-white rounded-2xl shadow p-6 font-dm font-semibold">
+    <h3 class="text-2xl font-bold mb-4 text-navy">Kursus Hari Ini</h3>
+    <ul class="space-y-4">
+    @forelse ($latestKursus as $kursus)
+        <li class="border rounded-xl p-3 hover:bg-gray-100 transition">
+            <a href="{{ route('kursus.show', $kursus->id) }}" class="block">
+                <p class="font-semibold text-blue-600">{{ $kursus->nama_kursus }}</p>
+                <p class="text-sm text-gray-500">Kategori: {{ $kursus->kategori }}</p>
+            </a>
+        </li>
+    @empty
+        <li class="text-gray-500">Belum ada kursus yang diunggah hari ini.</li>
+    @endforelse
+</ul>
+</div>
         </div>
     </div>
 </body>
