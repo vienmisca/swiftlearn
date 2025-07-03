@@ -41,14 +41,17 @@ Route::middleware(['auth', 'siswa'])->group(function () {
     Route::get('/profile', fn () => view('profile.profile', ['user' => auth()->user()]))->name('profile');
     Route::get('/profile/edit', fn () => view('profile.profile-edit', ['user' => auth()->user()]))->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     // Kursus routes
     Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
     Route::get('/kursus/{id}', [KursusController::class, 'show'])->name('kursus.show');
     Route::get('/api/kursus', [KursusController::class, 'api']);
-    Route::get('/kursus-saya', [KursusController::class, 'kursusSaya'])->name('kursus-saya');
+    // Route::get('/kursus-saya', [KursusController::class, 'kursusSaya'])->name('kursus-saya');
     Route::get('/materi/{id}', [MateriController::class, 'show'])->name('materi.show');
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/kursus-saya', [KursusController::class, 'kursusSaya'])->name('kursus-saya');
+    Route::get('/tugas/kerjakan/{materi}', [MateriController::class, 'kerjakanTugas'])->name('materi.kerjakan');
+
 });
 
 // // Preview detail kursus (UI only)

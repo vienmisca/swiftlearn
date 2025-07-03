@@ -40,16 +40,17 @@
 
         <!-- Grid of Kursus History -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @foreach($historyCourses as $course)
-            <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <img src="{{ $course->thumbnail_url ?? 'https://via.placeholder.com/300x200' }}" 
-                    class="w-full h-40 object-cover" />
-                <div class="p-4">
-                    <h4 class="font-semibold mb-1 text-gray-800">{{ $course->title }}</h4>
-                    <p class="text-sm text-gray-500">Materi: {{ $course->category_name }}</p>
-                </div>
-            </div>
-            @endforeach
+           @foreach($historyCourses as $course)
+<a href="{{ route('kursus.show', $course->id) }}" class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+    <img src="{{ asset('storage/' . $course->sampul_kursus) }}" class="w-full h-40 object-cover" />
+    <div class="p-4">
+        <h4 class="font-semibold mb-1 text-gray-800">{{ $course->nama_kursus }}</h4>
+        <p class="text-sm text-gray-500">Kategori: {{ $course->kategori }}</p>
+    </div>
+</a>
+
+@endforeach
+
         </div>
     </div>
 </body>

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Materi;
 use App\Models\Kursus;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\KursusSelesai;
+use Illuminate\Support\Facades\Auth;
+use App\Models\MateriView;
 class MateriController extends Controller
 {
     // Handle uploading of new materi
@@ -114,9 +116,37 @@ class MateriController extends Controller
         return redirect()->back()->with('success', 'Materi berhasil dihapus.');
     }
     public function show($id)
-    {
-        $materi = Materi::with(['kursus', 'kursus.mentor'])->findOrFail($id);
-        return view('pages.kursus.materi-detail', compact('materi'));
+{
+    $materi = Materi::with(['kursus', 'kursus.mentor'])->findOrFail($id);
+
+    if (auth()->check() && auth()->user()->role === 'siswa') {
+        MateriView::firstOrCreate([
+            'user_id' => auth()->id(),
+            'materi_id' => $materi->id,
+        ]);
     }
 
+    return view('pages.kursus.materi-detail', compact('materi'));
+}
+public function kerjakanTugas($id)
+{
+    $materi = Materi::findOrFail($id);
+    $user = Auth::user();
+    $kursusId = $materi->kursus_id;
+
+    // Cek apakah user sudah menyelesaikan kursus ini
+    $sudahSelesai = KursusSelesai::where('user_id', $user->id)
+        ->where('kursus_id', $kursusId)
+        ->exists();
+
+    if (!$sudahSelesai) {
+        KursusSelesai::create([
+            'user_id' => $user->id,
+            'kursus_id' => $kursusId,
+        ]);
+    }
+
+    // Redirect ke link Google Form (tugas)
+    return redirect()->away($materi->google_form_link);
+}
 }

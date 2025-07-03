@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\MateriView;
+use App\Models\KursusSelesai;
 class ProfileController extends Controller
 {
     public function edit()
@@ -51,4 +52,14 @@ class ProfileController extends Controller
 
         return redirect()->route('profile')->with('success', 'Profile updated successfully!');
     }
+    
+public function show()
+{
+    $user = auth()->user();
+
+    $joinMateriCount = MateriView::where('user_id', $user->id)->count();
+    $kursusSelesaiCount = KursusSelesai::where('user_id', $user->id)->count();
+
+    return view('profile.profile', compact('user', 'joinMateriCount', 'kursusSelesaiCount'));
+}
 }

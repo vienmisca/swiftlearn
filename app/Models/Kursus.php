@@ -38,4 +38,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ Correct!
     // {
     //     return $this->belongsTo(Category::class, 'kategori', 'id'); // adjust foreign key if needed
     // }
+    public function viewers()
+{
+    return $this->belongsToMany(User::class, 'history_kursus', 'kursus_id', 'user_id')
+                ->withTimestamps();
+}
 }
