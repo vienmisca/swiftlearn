@@ -26,7 +26,7 @@ export default function KursusPage({ groupedCourses }) {
         {/* Judul + Garis */}
         <div className="flex items-center gap-6">
           <h2 className="text-3xl font-extrabold text-navy">Kategori</h2>
-          <div className="w-64 h-2 bg-navy rounded-full"></div>
+          <div className="w-96 h-2 bg-navy rounded-full"></div>
         </div>
 
         {/* Search Bar */}
@@ -89,7 +89,7 @@ export default function KursusPage({ groupedCourses }) {
       </div>
 
       {/* Kursus List (pastikan KursusPerKategori punya hover shadow) */}
-      <div className="space-y-16 ">
+      <div className="space-y-16 text-navy">
         {categories
           .filter(cat => !activeCat || cat === activeCat)
           .map(cat => {

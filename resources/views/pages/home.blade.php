@@ -16,7 +16,7 @@
         <!-- Navbar -->
         <div class="flex justify-between items-center bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4 rounded-full shadow-md">
             <div class="flex items-center space-x-8 text-white">
-                <img src="https://media.discordapp.net/attachments/755299102148919317/1384821190991806534/Logo_SL.png?ex=6859c17c&is=68586ffc&hm=cd526f9f63c9da0af4f8fbc246789893e4ccf8683b9298a9f02836564d9d9f7a&=&format=webp&quality=lossless&width=930&height=930" alt="Logo" class="h-8">
+                <img src="/images/swiftbird.png" alt="Logo" class="h-10">
                 <a href="{{ route('home') }}" class="font-semibold hover:underline">Home</a>
                 <a href="{{ route('kursus.index') }}" class="hover:underline">Kursus</a>
                 <a href="{{ route('kursus-saya') }}" class="hover:underline">Kursus Saya</a>
@@ -39,22 +39,24 @@
             <!-- Left Column -->
             <div class="lg:col-span-3 space-y-6">
                 <!-- Greeting Card -->
-                <div class="bg-white rounded-2xl shadow p-6 relative overflow-hidden">
-                    <h2 class="text-3xl font-dm font-bold text-navy tracking-tighter">
-                        Halo {{ auth()->user()->name ?? 'Pelajar' }}!<br>
-                        Tertarik <span class="underline decoration-purple-500">Belajar</span> apa hari ini?
-                    </h2>
-                    <p class="font-dm font-semibold text-gray-500 mt-2">
-                        Telusuri lebih banyak materi yang kamu sukai!
-                    </p>
-                    <button class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
-                        <a href="{{ route('kursus.index') }}">Cari Materi</a> 
-                    </button>
+                <div class="bg-white rounded-2xl shadow p-6 relative overflow-hidden animate__animated animate__fadeInUp animate__delay-0.2s">
+                <h2 class="text-3xl font-dm font-bold text-navy tracking-tighter">
+                    Halo {{ auth()->user()->name ?? 'Pelajar' }}!<br>
+                    Tertarik <span class="underline decoration-purple-500">Belajar</span> apa hari ini?
+                </h2>
 
-                    <!-- Glove Image Dekoratif -->
-                    <img src="{{ asset('images/cos-glove.png') }}" 
-                        alt="Hand pointer" 
-                        class="absolute top-10 right-10 w-32 rotate-[-10deg] pointer-events-none" />
+                <p class="font-dm font-semibold text-gray-500 mt-2">
+                    Telusuri lebih banyak materi yang kamu sukai!
+                </p>
+
+                <button class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 hover:scale-105 transition duration-300 transform">
+                    <a href="{{ route('kursus.index') }}">Cari Materi</a> 
+                </button>
+
+                <!-- Glove Image Dekoratif -->
+                <img src="{{ asset('images/cos-glove.png') }}" 
+                    alt="Hand pointer" 
+                    class="absolute top-10 right-10 w-32 rotate-[-10deg] pointer-events-none animate__animated animate__zoomIn animate__delay-0.4s" />
                 </div>
 
 
@@ -66,7 +68,7 @@
     <h3 class="text-xl font-dm font-bold mb-3">Kursus yang di ikuti</h3>
     <ul class="space-y-3">
         @forelse ($kursusDiikuti as $kursus)
-            <li class="border rounded-xl p-2 hover:bg-gray-100 transition">
+            <li class="border rounded-xl p-2 hover:bg-gray-100 transition transform hover:scale-105 animate__animated animate__fadeInUp">
                 <a href="{{ route('kursus.show', $kursus->id) }}">
                     <p class="font-semibold">{{ $kursus->nama_kursus }}</p>
                     <p class="text-sm text-gray-500">{{ $kursus->kategori }}</p>
@@ -87,22 +89,23 @@
                 </div>
             </div>
 
-            <!-- Kursus Hari Ini -->
-<div class="bg-white rounded-2xl shadow p-6 font-dm font-semibold">
-    <h3 class="text-2xl font-bold mb-4 text-navy">Kursus Hari Ini</h3>
-    <ul class="space-y-4">
-    @forelse ($latestKursus as $kursus)
-        <li class="border rounded-xl p-3 hover:bg-gray-100 transition">
-            <a href="{{ route('kursus.show', $kursus->id) }}" class="block">
-                <p class="font-semibold text-blue-600">{{ $kursus->nama_kursus }}</p>
-                <p class="text-sm text-gray-500">Kategori: {{ $kursus->kategori }}</p>
-            </a>
-        </li>
-    @empty
-        <li class="text-gray-500">Belum ada kursus yang diunggah hari ini.</li>
-    @endforelse
-</ul>
-</div>
+        <!-- Kursus Hari Ini -->
+        <div class="bg-white rounded-2xl shadow p-6 font-dm font-semibold animate__animated animate__fadeInRight animate__delay-0.3s">
+            <h3 class="text-2xl font-bold mb-4 text-navy">Kursus Hari Ini</h3>
+            <ul class="space-y-4">
+                @forelse ($latestKursus as $kursus)
+                    <li class="border rounded-xl p-3 hover:bg-gray-100 transition transform hover:scale-105 duration-300">
+                        <a href="{{ route('kursus.show', $kursus->id) }}" class="block">
+                            <p class="font-semibold text-blue-600">{{ $kursus->nama_kursus }}</p>
+                            <p class="text-sm text-gray-500">Kategori: {{ $kursus->kategori }}</p>
+                        </a>
+                    </li>
+                @empty
+                    <li class="text-gray-500">Belum ada kursus yang diunggah hari ini.</li>
+                @endforelse
+            </ul>
+        </div>
+
         </div>
     </div>
 </body>

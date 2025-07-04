@@ -19,8 +19,8 @@ class MateriController extends Controller
         'deskripsi' => 'nullable|string',
         'google_form_link' => 'nullable|url',
         'kursus_id' => 'required|exists:kursus,id',
-        'video' => 'nullable|mimes:mp4,mov,avi|max:51200',
-        'pdf' => 'nullable|mimes:pdf|max:20480',
+        'video' => 'nullable|mimes:mp4,mov,avi|max:102400', // 100MB
+        'pdf' => 'nullable|mimes:pdf|max:204800', // 200MB
     ]);
 
     $data = $request->only(['judul', 'deskripsi', 'google_form_link', 'kursus_id']);
