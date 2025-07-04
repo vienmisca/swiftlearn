@@ -61,23 +61,22 @@
                 <!-- Poster -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- kursus yang di ikuti -->
-                    <div class="bg-white rounded-2xl shadow p-4 text-navy ">
-                        <h3 class="text-xl font-dm font-bold mb-3">Kursus yang di ikuti</h3>
-                        <ul class="space-y-3">
-                            <li class="border rounded-xl p-2">
-                                <p class="font-semibold">Gravitasi</p>
-                                <p class="text-sm text-gray-500">Fisika</p>
-                            </li>
-                            <li class="border rounded-xl p-2">
-                                <p class="font-semibold">Gravitasi</p>
-                                <p class="text-sm text-gray-500">Fisika</p>
-                            </li>
-                            <li class="border rounded-xl p-2">
-                                <p class="font-semibold">Gravitasi</p>
-                                <p class="text-sm text-gray-500">Fisika</p>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- kursus yang di ikuti -->
+<div class="bg-white rounded-2xl shadow p-4 text-navy ">
+    <h3 class="text-xl font-dm font-bold mb-3">Kursus yang di ikuti</h3>
+    <ul class="space-y-3">
+        @forelse ($kursusDiikuti as $kursus)
+            <li class="border rounded-xl p-2 hover:bg-gray-100 transition">
+                <a href="{{ route('kursus.show', $kursus->id) }}">
+                    <p class="font-semibold">{{ $kursus->nama_kursus }}</p>
+                    <p class="text-sm text-gray-500">{{ $kursus->kategori }}</p>
+                </a>
+            </li>
+        @empty
+            <li class="text-gray-500">Belum ada kursus yang diikuti.</li>
+        @endforelse
+    </ul>
+</div>
                     <!-- Banner -->
                     <div class="relative">
                         <img src="{{ asset('images/swiftlearn-poster.png') }}" alt="Belajar" class="rounded-2xl shadow object-cover w-full h-full">

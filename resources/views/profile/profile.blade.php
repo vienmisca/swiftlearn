@@ -44,13 +44,13 @@
             <h2 class="text-3xl font-dm font-bold text-white">{{ auth()->user()->name ?? 'Guest' }}</h2>
             <p class="text-white/80 text-sm">{{ auth()->user()->email ?? 'email@example.com' }}</p>
 
-            <div class="flex items-center space-x-2 mt-1">
+            {{-- <div class="flex items-center space-x-2 mt-1">
                 <span class="text-yellow-400 font-bold text-lg">Lvl 3</span>
                 <span class="text-xl">🌼 🌼</span>
-            </div>
+            </div> --}}
 
             <p class="mt-4 text-white leading-relaxed max-w-xl">
-                {{ auth()->user()->about ?? 'Belum ada deskripsi' }}
+                {{ auth()->user()->about ?? 'Tidak ada bio' }}
             </p>
         </div>
 
@@ -89,19 +89,19 @@
         <!-- Statistik -->
         <div class="text-center mb-6">
             <h3 class="text-lg font-dm font-semibold mb-4 text-navy">Total keseluruhan :</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow text-blue-900 flex flex-col items-center justify-center">
                     <p class="font-semibold mb-2">Join Materi</p>
-                    <p class="text-4xl font-bold">13</p>
+                    <p class="text-4xl font-bold">{{ $joinMateriCount }}</p>
                 </div>
                 <div class="bg-white p-6 rounded-xl shadow text-blue-900 flex flex-col items-center justify-center">
-                    <p class="font-semibold mb-2">Materi Selesai</p>
-                    <p class="text-4xl font-bold">5</p>
+                    <p class="font-semibold mb-2">Kursus Selesai</p>
+                    <p class="text-4xl font-bold">{{ $kursusSelesaiCount }}</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow text-blue-900 flex flex-col items-center justify-center">
+                {{-- <div class="bg-white p-6 rounded-xl shadow text-blue-900 flex flex-col items-center justify-center">
                     <p class="font-semibold mb-2">Sertifikat</p>
                     <p class="text-4xl font-bold">5</p>
-                </div>
+                </div> --}}
             </div>
         </div>
 

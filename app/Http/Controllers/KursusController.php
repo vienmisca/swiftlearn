@@ -65,13 +65,24 @@ class KursusController extends Controller
     }
 
     public function show($id)
-    {
-        // Ambil kursus beserta relasi mentor dan materis
-        $kursus = Kursus::with(['materis', 'mentor'])->findOrFail($id);
+{
+    $kursus = Kursus::with(['materis', 'mentor'])->findOrFail($id);
+    $materis = $kursus->materis;
 
-        // Ambil materi secara terpisah untuk digunakan di Blade
-        $materis = $kursus->materis;
-
-        return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
+    // Record view history only if user is logged in and is a siswa
+    if (auth()->check() && auth()->user()->isSiswa()) {
+        auth()->user()->viewedKursus()->syncWithoutDetaching([$kursus->id]);
     }
+
+    return view('pages.kursus.kursus-detail', compact('kursus', 'materis'));
+}
+
+public function kursusSaya()
+{
+    $historyCourses = auth()->user()->viewedKursus;
+
+    return view('pages.kursus-saya', compact('historyCourses'));
+}
+
+
 }

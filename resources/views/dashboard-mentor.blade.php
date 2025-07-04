@@ -205,7 +205,9 @@
     </aside>
   </div> --}}
 
- <div x-show="openEditModal"
+ 
+</div>
+<div x-show="openEditModal"
 
        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div @click.outside="openEditModal = false"
@@ -257,8 +259,6 @@
       </form>
     </div>
   </div>
-</div>
-
 
 <!-- Modal Konfirmasi Hapus -->
 <div x-show="openDeleteModal"

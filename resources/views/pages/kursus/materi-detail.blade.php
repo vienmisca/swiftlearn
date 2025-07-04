@@ -70,8 +70,8 @@
 
       <!-- Tugas -->
       @if ($materi->google_form_link)
-        <a href="{{ $materi->google_form_link }}" target="_blank" rel="noopener noreferrer"
-           class="bg-white px-6 py-4 rounded-2xl shadow hover:shadow-md transition flex gap-3 items-center">
+        <a href="{{ route('materi.kerjakan', $materi->id) }}" target="_blank" rel="noopener noreferrer"
+   class="bg-white px-6 py-4 rounded-2xl shadow hover:shadow-md transition flex gap-3 items-center">
           <span class="text-2xl">📝</span>
           <div>
             <p class="font-semibold text-gray-800 leading-tight">Kerjakan Tugas</p>

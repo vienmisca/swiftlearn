@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Kursus;
 
 
 class User extends Authenticatable
@@ -63,4 +64,11 @@ public function isSiswa(): bool
         ? asset('storage/' . $this->photo) 
         : asset('images/avatar.png');
 }
+public function viewedKursus()
+{
+    return $this->belongsToMany(Kursus::class, 'history_kursus', 'user_id', 'kursus_id')
+                ->withTimestamps()
+                ->orderBy('history_kursus.created_at', 'desc');
+}
+
 }
