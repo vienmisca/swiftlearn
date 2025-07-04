@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import AdminDropdown from './components/AdminDropdown.jsx';
 import KursusDetail from './components/KursusDetail.jsx';
 import KursusPage from './components/pages/KursusPage.jsx';
+import 'animate.css';
 
 // 👉 Render AdminDropdown jika ditemukan
 const adminDropdownEl = document.getElementById('admin-dropdown');

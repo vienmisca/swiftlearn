@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@tailwindcss/postcss": "^4.1.7",
+        "animate.css": "^4.1.1",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "tailwind-clip-path": "^1.0.0"

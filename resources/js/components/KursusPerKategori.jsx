@@ -7,11 +7,26 @@ const KursusPerKategori = ({ kategori, kursus }) => {
 
   const paginated = kursus.slice((currentPage - 1) * perPage, currentPage * perPage);
 
+  // ✅ Emoji per kategori
+  const kategoriEmoji = {
+    IPA: '🔬',
+    Matematika: '📐',
+    Bahasa: '🗣️',
+    Kimia: '⚗️',
+    Fisika: '🧲',
+    Informatika: '💻',
+    Default: '📘'
+  };
+
+  const emoji = kategoriEmoji[kategori] || kategoriEmoji.Default;
+
   return (
     <div className="mb-12">
       {/* Judul dan Tombol Navigasi */}
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-bold text-gray-800">{kategori}</h3>
+        <h3 className="text-xl font-bold text-navy">
+          {emoji} {kategori}
+        </h3>
         <div className="flex gap-2">
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
@@ -29,7 +44,7 @@ const KursusPerKategori = ({ kategori, kursus }) => {
       </div>
 
       {/* Grid Card Kursus */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {paginated.map((course) => (
           <a
             key={course.id}
