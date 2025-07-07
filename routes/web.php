@@ -130,6 +130,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 */
 Route::middleware(['auth'])->group(function () {
     Route::post('/admin-mentor/logout', [AdminMentorLoginController::class, 'logout'])->name('adminmentor.logout');
+    
 });
 
 // Logout for siswa

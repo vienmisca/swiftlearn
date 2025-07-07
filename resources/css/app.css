@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .polygon-clip {
   clip-path: polygon(100% 0%, 100% 100%, 60% 85%, 0% 100%, 0% 0%);
   -webkit-clip-path: polygon(100% 0%, 100% 100%, 60% 85%, 0% 100%, 0% 0%);

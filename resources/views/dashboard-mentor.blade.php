@@ -13,7 +13,7 @@
   
 
 </head>
-<body x-data="{ openEditModal: false, kursusToEdit: null, openDeleteModal: false, kursusToDelete: null }">
+<body x-data="{ openEditModal: false, kursusToEdit: null, openDeleteModal: false, kursusToDelete: null, openLogoutModal: false }">
 <div class="min-h-screen py-10 px-8 bg-cover bg-center"
      style="background-image: url('{{ asset('images/bg-mentor.png') }}');">
 
@@ -46,19 +46,20 @@
 @endauth
 
 
-        <form method="POST" action="{{ route('adminmentor.logout') }}">
+        {{-- <form method="POST" action="{{ route('adminmentor.logout') }}"> --}}
             @csrf
-            <button type="submit"
-                class="text-red-600 flex items-center space-x-2 hover:underline">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V5m0 0a2 2 0 011.85 1.23" />
-                </svg>
-                <span>Keluar</span>
-            </button>
-        </form>
+            <button @click="openLogoutModal = true"
+        class="text-red-600 flex items-center space-x-2 hover:underline">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V5m0 0a2 2 0 011.85 1.23" />
+    </svg>
+    <span>Keluar</span>
+</button>
+
+        {{-- </form> --}}
     </div>
 </div>
 
@@ -104,13 +105,13 @@
       <!-- Edit & Delete Buttons -->
 <div class="flex items-center gap-2">
   <!-- Edit Button -->
-  <button @click="openEditModal = true; kursusToEdit = {{ $kursus->toJson() }}"
+  <button @click='openEditModal = true; kursusToEdit = @json($kursus)'
           class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
     Edit
   </button>
 
   <!-- Hapus Button -->
-  <button @click="openDeleteModal = true; kursusToDelete = {{ $kursus->toJson() }}"
+  <button @click='openDeleteModal = true; kursusToDelete = @json($kursus)'
         class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow">
   Hapus
 </button>
@@ -207,14 +208,14 @@
 
  
 </div>
-<div x-show="openEditModal"
+<div x-show="openEditModal" x-cloak
 
        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div @click.outside="openEditModal = false"
          class="bg-white w-full max-w-xl p-6 rounded-xl shadow-lg">
       <h2 class="text-xl font-bold text-blue-900 mb-4">Edit Kursus</h2>
 
-      <form :action="`{{ url('/mentor/kursus') }}/${kursusToEdit.id}`" method="POST" enctype="multipart/form-data">
+      <form x-show="kursusToEdit" :action="`/mentor/kursus/${kursusToEdit.id}`" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
         <!-- Nama Kursus -->
@@ -261,7 +262,7 @@
   </div>
 
 <!-- Modal Konfirmasi Hapus -->
-<div x-show="openDeleteModal"
+<div x-show="openDeleteModal" x-cloak
      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
      x-transition:enter="transition-opacity ease-out duration-200"
      x-transition:enter-start="opacity-0"
@@ -301,6 +302,36 @@
       </div>
     </form>
 
+  </div>
+</div>
+<!-- Logout Confirmation Modal -->
+<div x-show="openLogoutModal"
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+     x-transition:enter="transition-opacity ease-out duration-200"
+     x-transition:leave="transition-opacity ease-in duration-150"
+     x-cloak>
+  <div @click.outside="openLogoutModal = false"
+       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:leave="transition ease-in duration-200">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Keluar</h2>
+    <p class="mb-6 text-gray-700">
+      Apakah Anda yakin ingin keluar?
+    </p>
+    <form method="POST" action="{{ route('adminmentor.logout') }}">
+      @csrf
+      <div class="flex justify-center gap-4">
+        <button type="button"
+                @click="openLogoutModal = false"
+                class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
+          Batal
+        </button>
+        <button type="submit"
+                class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
+          Keluar
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
