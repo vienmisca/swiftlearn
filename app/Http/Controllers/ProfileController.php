@@ -21,37 +21,46 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp',
-            'interests' => 'required|array|size:3',
-            'interests.*' => 'required|distinct|string',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        'interests' => 'required|array',
+        'interests.*' => 'required|string|distinct',
+        'old_password' => ['nullable', 'current_password'],
+        'new_password' => ['nullable', 'min:8', 'confirmed'],
+    ]);
 
-        $user = auth()->user();
-
-        if ($request->hasFile('photo')) {
-            $photo = $request->file('photo')->store('photos', 'public');
-            $user->photo = $photo;
-        }
-
-        $user->name = $request->name;
-        $user->about = $request->filled('about') ? $request->about : $user->about;
-        $user->interests = $request->interests;
-
-        // ✅ Password handling
-        if ($request->filled('old_password') && Hash::check($request->old_password, $user->password)) {
-            $request->validate([
-                'new_password' => 'required|confirmed|min:8',
-            ]);
-            $user->password = bcrypt($request->new_password);
-        }
-
-        $user->save();
-
-        return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+    if (count(array_filter($request->interests)) < 3) {
+        return back()
+            ->with('interest_error', true)
+            ->withInput();
     }
+
+    $user = auth()->user();
+
+    if ($request->hasFile('photo')) {
+        $photo = $request->file('photo')->store('photos', 'public');
+        $user->photo = $photo;
+    }
+
+    $user->name = $request->name;
+    $user->about = $request->filled('about') ? $request->about : $user->about;
+    $user->interests = $request->interests;
+
+    if ($request->filled('old_password') && Hash::check($request->old_password, $user->password)) {
+        $request->validate([
+            'new_password' => 'required|confirmed|min:8',
+        ]);
+        $user->password = bcrypt($request->new_password);
+    }
+
+    $user->save();
+
+    return redirect()->route('profile')->with('success', 'Profile updated successfully!');
+}
+
+
     
 public function show()
 {

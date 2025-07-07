@@ -20,7 +20,8 @@
     openDeleteSiswaModal: false,
     siswaToDelete: null,
     openDeleteKursusModal: false,
-    kursusToDelete: null
+    kursusToDelete: null,
+    openLogoutConfirmModal: false
   }"
   style="background-image: url('{{ asset('images/background-admin.png') }}'); background-size: cover; background-repeat: no-repeat; background-position: center;"
 >
@@ -40,17 +41,19 @@
   <!-- Dropdown -->
   <div x-show="open" @click.outside="open = false"
        class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg p-4 z-50">
-    <form method="POST" action="{{ route('adminmentor.logout') }}">
-      @csrf
-      <button type="submit"
-              class="w-full text-red-600 flex items-center space-x-2 hover:underline">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7" />
-        </svg>
-        <span>Keluar</span>
-      </button>
+    <button
+  type="button"
+  @click="openLogoutConfirmModal = true"
+  class="w-full text-red-600 flex items-center space-x-2 hover:underline"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+       viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M17 16l4-4m0 0l-4-4m4 4H7" />
+  </svg>
+  <span>Keluar</span>
+</button>
+
     </form>
   </div>
 </div>
@@ -261,6 +264,33 @@
         <button type="submit"
                 class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
           Hapus
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Logout Confirmation Modal -->
+<div x-show="openLogoutConfirmModal"
+     x-transition
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div @click.outside="openLogoutConfirmModal = false"
+       class="bg-white w-full max-w-md p-6 rounded-xl shadow-lg text-center">
+    <h2 class="text-xl font-bold text-red-600 mb-4">Konfirmasi Logout</h2>
+    <p class="mb-6 text-gray-700">
+      Apakah Anda yakin ingin keluar dari akun admin?
+    </p>
+
+    <form method="POST" action="{{ route('adminmentor.logout') }}">
+      @csrf
+      <div class="flex justify-center gap-4">
+        <button type="button"
+                @click="openLogoutConfirmModal = false"
+                class="px-4 py-2 bg-gray-400 text-white rounded-xl text-sm font-semibold shadow">
+          Batal
+        </button>
+        <button type="submit"
+                class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow">
+          Keluar
         </button>
       </div>
     </form>
