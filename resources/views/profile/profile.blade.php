@@ -8,6 +8,7 @@
     <!-- Google Fonts Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('images/swiftbird.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <style>
         body {
@@ -58,7 +59,7 @@
         <!-- Edit Profile Button -->
         <div class="ml-auto">
             <a href="{{ route('profile.edit') }}" 
-                class="bg-white text-blue-700 font-semibold px-6 py-2 rounded-full shadow hover:bg-blue-100 transition animate__animated animate__fadeIn animate__delay-0.6s">
+                class="bg-white text-blue-700 font-semibold px-6 py-2 rounded-full shadow hover:bg-blue-100 transition">
              Edit Profile
             </a>
         </div>

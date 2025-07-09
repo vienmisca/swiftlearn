@@ -8,7 +8,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>body { font-family: 'Poppins', sans-serif; }</style>
+  <link rel="icon" type="image/png" href="{{ asset('images/swiftbird.png') }}">
 </head>
 <body 
   x-data="{openEditModal: false, openDeleteModal: false, materiToEdit: {}, materiToDelete: {}}" 

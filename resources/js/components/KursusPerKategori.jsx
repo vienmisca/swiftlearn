@@ -13,7 +13,7 @@ const KursusPerKategori = ({ kategori, kursus }) => {
     Matematika: '📐',
     Bahasa: '🗣️',
     Kimia: '⚗️',
-    Fisika: '🧲',
+    Fisika: '🧲', 
     Informatika: '💻',
     Default: '📘'
   };
