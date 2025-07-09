@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('images/swiftbird.png') }}">
 </head>
 <body class="bg-cover bg-center h-screen w-screen overflow-hidden flex" 
       style="background-image: url({{ asset('images/page.png') }});">
@@ -39,7 +40,7 @@
             <!-- Left Column -->
             <div class="lg:col-span-3 space-y-6">
                 <!-- Greeting Card -->
-                <div class="bg-white rounded-2xl shadow p-6 relative overflow-hidden animate__animated animate__fadeInUp animate__delay-0.2s">
+                <div class="bg-white rounded-2xl shadow p-6 relative overflow-hidden">
                 <h2 class="text-3xl font-dm font-bold text-navy tracking-tighter">
                     Halo {{ auth()->user()->name ?? 'Pelajar' }}!<br>
                     Tertarik <span class="underline decoration-purple-500">Belajar</span> apa hari ini?
@@ -56,19 +57,18 @@
                 <!-- Glove Image Dekoratif -->
                 <img src="{{ asset('images/cos-glove.png') }}" 
                     alt="Hand pointer" 
-                    class="absolute top-10 right-10 w-32 rotate-[-10deg] pointer-events-none animate__animated animate__zoomIn animate__delay-0.4s" />
+                    class="absolute top-10 right-10 w-32 rotate-[-10deg] pointer-events-none" />
                 </div>
 
 
                 <!-- Poster -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- kursus yang di ikuti -->
-                    <!-- kursus yang di ikuti -->
 <div class="bg-white rounded-2xl shadow p-4 text-navy ">
     <h3 class="text-xl font-dm font-bold mb-3">Kursus yang di ikuti</h3>
     <ul class="space-y-3">
         @forelse ($kursusDiikuti as $kursus)
-            <li class="border rounded-xl p-2 hover:bg-gray-100 transition transform hover:scale-105 animate__animated animate__fadeInUp">
+            <li class="border rounded-xl p-2 hover:bg-gray-100 transition transform hover:scale-105">
                 <a href="{{ route('kursus.show', $kursus->id) }}">
                     <p class="font-semibold">{{ $kursus->nama_kursus }}</p>
                     <p class="text-sm text-gray-500">{{ $kursus->kategori }}</p>
@@ -90,7 +90,7 @@
             </div>
 
         <!-- Kursus Hari Ini -->
-        <div class="bg-white rounded-2xl shadow p-6 font-dm font-semibold animate__animated animate__fadeInRight animate__delay-0.3s">
+        <div class="bg-white rounded-2xl shadow p-6 font-dm font-semibold ">
             <h3 class="text-2xl font-bold mb-4 text-navy">Kursus Hari Ini</h3>
             <ul class="space-y-4">
                 @forelse ($latestKursus as $kursus)
